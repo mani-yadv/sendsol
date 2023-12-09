@@ -6,6 +6,9 @@ module.exports = {
     },
     globals: {
         defineAppConfig: "readonly",
+        definePageMeta: "readonly",
+        useColorMode: "readonly",
+        computed: "readonly",
     },
     extends: [
         "@nuxt/eslint-config",
@@ -13,10 +16,9 @@ module.exports = {
         "plugin:prettier/recommended",
         "eslint-config-prettier",
         "plugin:vue/vue3-recommended",
-        "./.nuxt/.eslint.globals.json",
         "plugin:tailwindcss/recommended",
     ],
-    plugins: ["vue"],
+    plugins: ["vue", '@typescript-eslint'],
     // add your custom rules here
     rules: {
         semi: ["error", "always"],
@@ -116,4 +118,4 @@ module.exports = {
             },
         },
     ],
-};
+}; // end module.exports

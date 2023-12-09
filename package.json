@@ -23,6 +23,8 @@
         "@nuxtjs/eslint-module": "^4.1.0",
         "@nuxtjs/google-fonts": "^3.0.2",
         "@nuxtjs/supabase": "^1.1.4",
+        "@typescript-eslint/eslint-plugin": "^6.13.2",
+        "@typescript-eslint/parser": "^6.13.2",
         "daisyui": "^3.9.3",
         "eslint": "^8.52.0",
         "eslint-config-prettier": "^9.0.0",

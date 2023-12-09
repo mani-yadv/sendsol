@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         "@nuxt/ui",
 
         // Supabase
-        "@nuxtjs/supabase",
+        // "@nuxtjs/supabase",
 
         // Utilities modules
         "@vueuse/nuxt",
@@ -28,9 +28,9 @@ export default defineNuxtConfig({
         // Testing
         "nuxt-vitest"
     ],
-    supabase: {
-        redirect: false
-    },
+    // supabase: {
+    //     redirect: false
+    // },
     tailwindcss: {
         exposeConfig: true
     },
