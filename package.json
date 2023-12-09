@@ -1,0 +1,49 @@
+{
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "lint": "eslint . --ext .js,.ts,.vue",
+        "lint:fix": "eslint --fix . --ext .js,.ts,.vue",
+        "format": "prettier --check ./**/*.{js,ts,vue}",
+        "format:fix": "prettier --write ./**/*.{js,ts,vue}",
+        "code:fix": "npm run lint:fix && npm run format:fix",
+        "test": "vitest"
+    },
+    "devDependencies": {
+        "@nuxt/devtools": "latest",
+        "@nuxt/eslint-config": "^0.2.0",
+        "@nuxt/kit": "^3.8.0",
+        "@nuxtjs/device": "^3.1.1",
+        "@nuxtjs/eslint-module": "^4.1.0",
+        "@nuxtjs/google-fonts": "^3.0.2",
+        "@nuxtjs/supabase": "^1.1.4",
+        "daisyui": "^3.9.3",
+        "eslint": "^8.52.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.1",
+        "eslint-plugin-tailwindcss": "^3.13.0",
+        "happy-dom": "^12.10.3",
+        "nuxt": "^3.8.0",
+        "nuxt-phosphor-icons": "^1.0.8",
+        "nuxt-viewport": "^2.0.6",
+        "nuxt-vitest": "^0.11.5",
+        "prettier": "^3.1.0",
+        "typescript": "^5.2.2",
+        "vitest": "^0.33.0",
+        "vue": "^3.3.4",
+        "vue-router": "^4.2.5"
+    },
+    "dependencies": {
+        "@formkit/auto-animate": "^0.8.1",
+        "@nuxt/ui": "^2.9.0",
+        "@vueuse/gesture": "^2.0.0-beta.1",
+        "@vueuse/motion": "^2.0.0",
+        "@vueuse/nuxt": "^10.5.0"
+    }
+}

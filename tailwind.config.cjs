@@ -1,0 +1,41 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: [
+        "components/**/*.{vue,js,ts}",
+        "layouts/**/*.vue",
+        "pages/**/*.vue",
+        "composables/**/*.{js,ts}",
+        "plugins/**/*.{js,ts}",
+        "App.{js,ts,vue}",
+        "app.{js,ts,vue}",
+        "Error.{js,ts,vue}",
+        "error.{js,ts,vue}",
+    ],
+    theme: {
+        extend: {
+            // Example theme colors
+            colors: {
+                gigas: {
+                    50: "#b7c0fa",
+                    100: "#a9b2f9",
+                    200: "#949ef4",
+                    300: "#777dee",
+                    400: "#5754e8",
+                    500: "#483bde",
+                    600: "#452bc5",
+                    700: "#3c2c81",
+                    800: "#33286c",
+                    900: "#28214f",
+                    950: "#0f0c1c",
+                },
+                // ... other colors as needed
+            },
+            fontFamily: {
+                body: ["Roboto", "sans"],
+                logo: ["Dangrek", "sans"],
+                title: ["DM Sans", "sans"],
+            },
+        },
+    },
+    plugins: [require("daisyui")],
+};
