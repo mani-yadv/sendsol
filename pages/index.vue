@@ -1,6 +1,8 @@
 <template>
-    <div class="flex justify-center py-4">
-        <div class="my-12" />
+    <div>
+        <div>
+            <DashboardMain />
+        </div>
     </div>
 </template>
 

@@ -1,6 +1,11 @@
 <template>
-    <div class="fixed z-10 my-5 w-screen">
-        <div class="flex flex-col space-y-4 pl-10">Hello World</div>
+    <div class="my-2">
+        <div class="max-w-screen flex items-center justify-between">
+            <div>RIDE</div>
+            <div class="flex items-center">
+                <WalletConnect />
+            </div>
+        </div>
     </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NuxtLayout>
+        <NuxtLayout class="mx-2">
             <NuxtPage />
         </NuxtLayout>
     </div>
@@ -10,5 +10,13 @@
     // For Nuxt 3
     definePageMeta({
         colorMode: "light"
+    });
+
+    useHead({
+        title: "RIDE",
+        meta: [{ name: "Take profits", content: "Easy Solana profits" }],
+        htmlAttrs: {
+            "data-theme": "forest"
+        }
     });
 </script>

@@ -1,8 +1,28 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
+    ssr: false,
+    vite: {
+        esbuild: {
+            target: "esnext"
+        },
+        build: {
+            target: "esnext"
+        },
+        optimizeDeps: {
+            include: ["@project-serum/anchor", "@solana/web3.js", "buffer"],
+            esbuildOptions: {
+                target: "esnext"
+            }
+        },
+        define: {
+            "process.env.BROWSER": true
+        }
+    },
     runtimeConfig: {
-        app: {}
+        app: {
+            solanaRpcUrl: "https://api.devnet.solana.com"
+        }
     },
     devtools: { enabled: true },
     modules: [
@@ -40,5 +60,9 @@ export default defineNuxtConfig({
             "DM Sans": [100, 300, 400, 500, 700, 900],
             Dangrek: true
         }
+    },
+    colorMode: {
+        preference: "cyberpunk", // default theme
+        dataValue: "theme" // activate data-theme in <html> tag
     }
 });

@@ -7,8 +7,11 @@ module.exports = {
     globals: {
         defineAppConfig: "readonly",
         definePageMeta: "readonly",
+        defineNuxtPlugin: "readonly",
         useColorMode: "readonly",
         computed: "readonly",
+        useHead: "readonly",
+        useRuntimeConfig: "readonly",
     },
     extends: [
         "@nuxt/eslint-config",
@@ -94,6 +97,7 @@ module.exports = {
         "vue/order-in-components": "error", // Enforce template-script order
         "vue/singleline-html-element-content-newline": "off",
         "vue/html-closing-bracket-newline": "off",
+        "vue/html-self-closing": "off"
     },
     overrides: [
         {

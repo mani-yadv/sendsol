@@ -44,8 +44,13 @@
     "dependencies": {
         "@formkit/auto-animate": "^0.8.1",
         "@nuxt/ui": "^2.9.0",
+        "@solana/wallet-adapter-wallets": "^0.19.24",
+        "@solana/web3.js": "^1.87.6",
         "@vueuse/gesture": "^2.0.0-beta.1",
         "@vueuse/motion": "^2.0.0",
-        "@vueuse/nuxt": "^10.5.0"
+        "@vueuse/nuxt": "^10.5.0",
+        "axios": "^1.6.2",
+        "buffer": "^6.0.3",
+        "solana-wallets-vue": "^0.6.0"
     }
 }
