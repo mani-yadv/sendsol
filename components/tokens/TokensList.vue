@@ -1,12 +1,15 @@
 <template>
     <div class="fixed inset-x-2 -bottom-16 h-1/2 overflow-y-auto">
+        <div v-if="state.loading" class="my-6 flex w-full justify-center">
+            <Spinner></Spinner>
+        </div>
         <div v-if="!state.loading" class="z-20 border-t-2 border-gigas-950 shadow-2xl">
             <div v-if="tokens.length" class="grid grid-cols-4">
                 <div
                     v-for="token in tokens"
                     :key="token.id"
                     class="cursor-pointer flex-col space-y-1 border border-gigas-50 p-1">
-                    <TokensListItem :token="token" @selected:token="handleSelected" />
+                    <TokensListItem :token="token" @selected:token="handleSelected"></TokensListItem>
                 </div>
             </div>
         </div>
@@ -16,10 +19,11 @@
     import Tokens from "~/resources/jupiter/Tokens";
     import TokensListItem from "~/components/tokens/TokensListItem.vue";
     import AddressSignatures from "~/resources/solana/AddressSignatures.js";
+    import Spinner from "~/components/common/Spinner.vue";
 
     export default {
         name: "TokensList",
-        components: { TokensListItem },
+        components: { Spinner, TokensListItem },
         emits: ["selected:token"],
         data() {
             return {
@@ -50,7 +54,7 @@
             },
 
             async fetchActivity() {
-                const tokensForActivities = this.tokens.slice(0, 20);
+                const tokensForActivities = this.tokens.slice(0, 50);
                 for (const token of tokensForActivities) {
                     await this.getAddressActivity(token);
                 }
@@ -71,7 +75,7 @@
                 this.activities.sort((a, b) => b.activityRating - a.activityRating);
 
                 // Replace first 15 in tokens from activities and keep the rest
-                this.tokens = [...this.activities, ...this.tokens.slice(20)];
+                this.tokens = [...this.activities, ...this.tokens.slice(50)];
                 this.state.loading = false;
             },
 
