@@ -4,7 +4,8 @@
             <div v-if="selected" class="flex h-full flex-col justify-between space-y-2">
                 <div class="flex items-center space-x-2">
                     <div v-if="selected.logoURI" class="rounded-full">
-                        <img :src="selected.logoURI" class="h-8 w-8" />
+                        <!-- eslint-disable-next-line prettier/prettier -->
+                        <img :src="selected.logoURI" class="h-8 w-8" alt="token img">
                     </div>
                     <div class="text-base">
                         {{ selected.symbol }}
@@ -20,7 +21,7 @@
             </div>
             <div v-else>Please select a token</div>
         </div>
-        <TokensList @selected:token="handleSelectedToken" />
+        <TokensList @selected:token="handleSelectedToken"></TokensList>
     </div>
 </template>
 

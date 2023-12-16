@@ -97,7 +97,15 @@ module.exports = {
         "vue/order-in-components": "error", // Enforce template-script order
         "vue/singleline-html-element-content-newline": "off",
         "vue/html-closing-bracket-newline": "off",
-        "vue/html-self-closing": "off"
+        "vue/html-self-closing": ["error", {
+            "html": {
+                "void": "never",
+                "normal": "never",
+                "component": "never"
+            },
+            "svg": "always",
+            "math": "always"
+        }],
     },
     overrides: [
         {

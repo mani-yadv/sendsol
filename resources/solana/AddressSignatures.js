@@ -1,6 +1,7 @@
+// eslint-disable-next-line no-redeclare
+/* global useRuntimeConfig */
 import BaseModel from "~/resources/solana/base/BaseModel.js";
 import * as solanaWeb3 from "@solana/web3.js";
-import { useRuntimeConfig } from "~/lib/RuntimeConfig";
 
 export default class AddressSignatures extends BaseModel {
     resourceUrl() {
