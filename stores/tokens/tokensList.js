@@ -37,10 +37,16 @@ export const useTokensListStore = defineStore("tokensList", {
             // Sort tokens by activities ranking by using activities store
             const activitiesStore = useTokensActivitiesStore();
             const tokens = this.tokens;
+
             tokens.sort((a, b) => {
-                const aRanking = activitiesStore.activities[a.address];
-                const bRanking = activitiesStore.activities[b.address];
-                return bRanking - aRanking;
+                // Handle case when activities is not available, keep highest ranking at the top
+                if (!activitiesStore.activities[a.address]) {
+                    return 1;
+                }
+                if (!activitiesStore.activities[b.address]) {
+                    return -1;
+                }
+                return activitiesStore.activities[b.address] - activitiesStore.activities[a.address];
             });
             this.tokens = tokens;
         },
@@ -50,9 +56,14 @@ export const useTokensListStore = defineStore("tokensList", {
             const rankingsStore = useTokensRankingStore();
             const tokens = this.tokens;
             tokens.sort((a, b) => {
-                const aRanking = rankingsStore.rankings[a.address]?.rank;
-                const bRanking = rankingsStore.rankings[b.address]?.rank;
-                return bRanking - aRanking;
+                // Handle case when ranking is not available
+                if (!rankingsStore.rankings[a.address]?.rank) {
+                    return 1;
+                }
+                if (!rankingsStore.rankings[b.address]?.rank) {
+                    return -1;
+                }
+                return rankingsStore.rankings[a.address].rank - rankingsStore.rankings[b.address].rank;
             });
             this.tokens = tokens;
         },

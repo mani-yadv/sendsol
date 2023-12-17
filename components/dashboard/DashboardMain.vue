@@ -4,7 +4,7 @@
             <TokensSelected />
         </div>
         <div class="fixed inset-x-2 -bottom-16 h-2/3 overflow-y-auto">
-            <div class="z-20 my-1 h-10 w-full">
+            <div class="z-20 h-10 w-full">
                 <TokensFilters />
             </div>
             <div>

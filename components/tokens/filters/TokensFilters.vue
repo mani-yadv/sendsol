@@ -1,19 +1,19 @@
 <template>
-    <div v-if="!tokensListStore.isLoading" class="flex w-full items-center justify-end space-x-2">
+    <div v-if="!tokensListStore.isLoading" class="flex w-full items-end justify-end space-x-2">
         <div class="text-2xs">Sort by:</div>
         <div v-if="!rankingsStore.isLoading">
-            <UButton
-                class="border-1 border-gigas-300 bg-transparent text-2xs text-white"
+            <div
+                class="border border-gigas-300 bg-transparent p-1 text-2xs text-white"
                 @click="tokensListStore.sortTokensByRanking">
                 Rankings
-            </UButton>
+            </div>
         </div>
         <div v-if="!activitiesStore.isLoading">
-            <UButton
-                class="border-1 border-gigas-300 bg-transparent text-2xs text-white"
+            <div
+                class="border border-gigas-300 bg-transparent p-1 text-2xs text-white"
                 @click="tokensListStore.sortTokensByActivitiesRanking">
                 Activities
-            </UButton>
+            </div>
         </div>
     </div>
 </template>
