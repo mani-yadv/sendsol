@@ -6,7 +6,10 @@
         </div>
         <div v-if="tokensActivityRating" class="flex items-center justify-between space-x-0.5">
             <span class="text-2xs">{{ tokensActivityRating }}</span>
-            <PhosphorIconUsers class="inline-block h-4 w-3" />
+            <span v-if="tokensActivityRating > 900" class="text-4xs">🔥🔥🔥</span>
+            <span v-else-if="tokensActivityRating > 750" class="text-4xs">🔥🔥</span>
+            <span v-else-if="tokensActivityRating > 500" class="text-4xs">🔥</span>
+            <PhosphorIconUsers v-else class="inline-block h-4 w-3" />
         </div>
     </div>
 </template>
