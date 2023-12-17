@@ -5,7 +5,7 @@ export default class TokensTrending extends BaseModel {
         return "https://api.coingecko.com/api/v3/search/trending";
     }
 
-    async get(params = {}) {
+    get(params = {}) {
         return this.axios.get(this.resourceUrl(), { params });
     }
 }

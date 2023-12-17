@@ -5,7 +5,7 @@ export default class Stats extends BaseModel {
         return "https://stats.jup.ag/info/day";
     }
 
-    async get(params = {}) {
+    get(params = {}) {
         return this.axios.get(this.resourceUrl(), { params });
     }
 }

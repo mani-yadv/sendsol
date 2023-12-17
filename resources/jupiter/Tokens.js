@@ -5,7 +5,7 @@ export default class Tokens extends BaseModel {
         return "https://token.jup.ag/strict";
     }
 
-    async get(params = {}) {
+    get(params = {}) {
         return this.axios.get(this.resourceUrl(), { params });
     }
 }

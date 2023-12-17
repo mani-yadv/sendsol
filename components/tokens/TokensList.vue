@@ -1,94 +1,68 @@
 <template>
-    <div class="fixed inset-x-2 -bottom-16 h-1/2 overflow-y-auto">
-        <div v-if="state.loading" class="my-6 flex w-full justify-center">
-            <Spinner></Spinner>
+    <div>
+        <div v-if="isLoading" class="my-6 flex w-full justify-center">
+            <Spinner />
         </div>
-        <div v-if="!state.loading" class="z-20 border-t-2 border-gigas-950 shadow-2xl">
-            <div v-if="tokens.length" class="grid grid-cols-4">
+        <div v-if="!isLoading" class="z-20 border-t-2 border-gigas-950 shadow-2xl">
+            <div v-if="tokensListStore.tokens.length" class="grid grid-cols-4">
                 <div
-                    v-for="token in tokens"
+                    v-for="token in tokensListStore.tokens"
                     :key="token.id"
                     class="cursor-pointer flex-col space-y-1 border border-gigas-50 p-1">
-                    <TokensListItem :token="token" @selected:token="handleSelected"></TokensListItem>
+                    <TokensListItem :token="token" />
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-    import Tokens from "~/resources/jupiter/Tokens";
     import TokensListItem from "~/components/tokens/TokensListItem.vue";
-    import AddressSignatures from "~/resources/solana/AddressSignatures.js";
     import Spinner from "~/components/common/Spinner.vue";
+    import { useTokensActivitiesStore } from "~/stores/tokens/tokensActivities.js";
+    import { useTokensListStore } from "~/stores/tokens/tokensList.js";
+    import { useTokensRankingStore } from "~/stores/tokens/tokensRanking.js";
 
     export default {
         name: "TokensList",
         components: { Spinner, TokensListItem },
         emits: ["selected:token"],
-        data() {
+
+        setup() {
             return {
-                tokens: [],
-                activities: [],
-                selectedToken: null,
-                state: {
-                    loading: true
-                }
+                tokensListStore: useTokensListStore(),
+                tokensActivitiesStore: useTokensActivitiesStore(),
+                tokensRankingStore: useTokensRankingStore()
             };
         },
-        mounted() {
+        data() {
+            return {};
+        },
+
+        computed: {
+            isLoading() {
+                return this.tokensListStore.isLoading;
+            },
+            activitiesLoading() {
+                return this.tokensActivitiesStore.isLoading;
+            }
+        },
+
+        watch: {
+            activitiesLoading(newValue) {
+                if (!newValue) {
+                    this.tokensListStore.sortTokensByActivitiesRanking();
+                }
+            }
+        },
+        created() {
             this.init();
         },
 
         methods: {
             async init() {
-                await this.fetchTokens();
-                await this.fetchActivity();
-                this.formatData();
-            },
-
-            async fetchTokens() {
-                return new Tokens().get(this.getParams()).then((response) => {
-                    this.tokens = response.data;
-                    return response.data;
-                });
-            },
-
-            async fetchActivity() {
-                const tokensForActivities = this.tokens.slice(0, 50);
-                for (const token of tokensForActivities) {
-                    await this.getAddressActivity(token);
-                }
-            },
-
-            async getAddressActivity(token) {
-                const signatures = await new AddressSignatures().get(token.address);
-                const fiveMinutesAgo = Date.now() / 1000 - 15 * 60; // Unix timestamp for 5 minutes ago
-
-                const recentSignatures = signatures.filter((signatureInfo) => signatureInfo.blockTime > fiveMinutesAgo);
-                this.activities.push({
-                    ...token,
-                    activityRating: recentSignatures.length
-                });
-            },
-
-            formatData() {
-                this.activities.sort((a, b) => b.activityRating - a.activityRating);
-
-                // Replace first 15 in tokens from activities and keep the rest
-                this.tokens = [...this.activities, ...this.tokens.slice(50)];
-                this.state.loading = false;
-            },
-
-            getParams() {
-                return {
-                    per_page: 100,
-                    page: 1
-                };
-            },
-
-            handleSelected(token) {
-                this.selectedToken = token;
-                this.$emit("selected:token", token);
+                this.tokensRankingStore.getGainersRanking();
+                await this.tokensListStore.getTokens();
+                await this.tokensActivitiesStore.getActivities();
             }
         }
     };

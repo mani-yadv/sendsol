@@ -10,6 +10,7 @@ export default defineNuxtConfig({
             target: "esnext"
         },
         optimizeDeps: {
+            exclude: ["fsevents"],
             include: ["@project-serum/anchor", "@solana/web3.js", "buffer"],
             esbuildOptions: {
                 target: "esnext"
@@ -21,11 +22,15 @@ export default defineNuxtConfig({
     },
     runtimeConfig: {
         app: {
-            solanaRpcUrl: "https://api.devnet.solana.com"
+            solanaRpcUrl: "https://api.devnet.solana.com",
+            dextoolApiKey: "test"
         }
     },
     devtools: { enabled: true },
     modules: [
+        // Pinia
+        "@pinia/nuxt",
+
         // Linting modules
         "@nuxtjs/eslint-module",
 

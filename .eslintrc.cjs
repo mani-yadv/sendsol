@@ -15,6 +15,7 @@ module.exports = {
     },
     extends: [
         "@nuxt/eslint-config",
+        "@nuxtjs/eslint-config-typescript",
         "eslint:recommended",
         "plugin:prettier/recommended",
         "eslint-config-prettier",
@@ -99,9 +100,7 @@ module.exports = {
         "vue/html-closing-bracket-newline": "off",
         "vue/html-self-closing": ["error", {
             "html": {
-                "void": "never",
-                "normal": "never",
-                "component": "never"
+                "void": "always",
             },
             "svg": "always",
             "math": "always"
