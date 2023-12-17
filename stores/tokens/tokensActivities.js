@@ -6,7 +6,7 @@ export const useTokensActivitiesStore = defineStore("tokensActivities", {
     state: () => ({
         activities: {},
         activityInterval: 15, // in minutes
-        tokensCount: 50, // in minutes
+        tokensCount: 5, // in minutes
         state: {
             loading: false,
             error: false

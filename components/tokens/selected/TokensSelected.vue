@@ -6,14 +6,13 @@
                     <!-- eslint-disable-next-line prettier/prettier -->
                     <img :src="selectedToken.logoURI" class="h-8 w-8" alt="token img" />
                 </div>
-                <div class="text-base">
-                    {{ selectedToken.symbol }}
-                    <span v-if="selectedTokensActivityRanking" class="text-2xs">
-                        ({{ selectedTokensActivityRanking }})
-                    </span>
-                    <span v-if="tokenRanking" class="text-2xs text-success">
-                        {{ tokenRanking }}
-                    </span>
+                <div class="flex flex-col items-start space-y-1">
+                    <div class="text-base">
+                        {{ selectedToken.symbol }}
+                    </div>
+                    <div class="mt-1 w-12">
+                        <TokensListItemRankings :token="selectedToken" selected />
+                    </div>
                 </div>
             </div>
             <div class="bottom-0 grid grid-cols-4 gap-2">
