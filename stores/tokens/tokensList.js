@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import Tokens from "~/resources/jupiter/Tokens.js";
 import { useTokensActivitiesStore } from "~/stores/tokens/tokensActivities.js";
+import { useTokensRankingStore } from "~/stores/tokens/tokensRanking.js";
 
 export const useTokensListStore = defineStore("tokensList", {
     state: () => ({
@@ -39,6 +40,18 @@ export const useTokensListStore = defineStore("tokensList", {
             tokens.sort((a, b) => {
                 const aRanking = activitiesStore.activities[a.address];
                 const bRanking = activitiesStore.activities[b.address];
+                return bRanking - aRanking;
+            });
+            this.tokens = tokens;
+        },
+
+        sortTokensByRanking() {
+            // Sort tokens by activities ranking by using activities store
+            const rankingsStore = useTokensRankingStore();
+            const tokens = this.tokens;
+            tokens.sort((a, b) => {
+                const aRanking = rankingsStore.rankings[a.address]?.rank;
+                const bRanking = rankingsStore.rankings[b.address]?.rank;
                 return bRanking - aRanking;
             });
             this.tokens = tokens;
