@@ -1,22 +1,37 @@
 <template>
-    <div>
-        <NuxtLayout class="mx-2">
+    <div class="mx-auto max-w-[520px]">
+        <NuxtLayout>
             <NuxtPage />
         </NuxtLayout>
     </div>
 </template>
 
-<script setup>
-    // For Nuxt 3
-    definePageMeta({
-        colorMode: "light"
-    });
+<script lang="ts">
+    import { defineComponent } from "vue";
+    import { useUserStore } from "~/stores/user/userStore";
 
-    useHead({
-        title: "RIDE",
-        meta: [{ name: "Take profits", content: "Easy Solana profits" }],
-        htmlAttrs: {
-            "data-theme": "forest"
+    export default defineComponent({
+        name: "app",
+        setup() {
+            definePageMeta({
+                colorMode: "light"
+            });
+
+            useHead({
+                title: "SendSol",
+                meta: [{ name: "headline", content: "Crowdfund Solana projects" }],
+                htmlAttrs: {
+                    "data-theme": "forest"
+                }
+            });
+
+            return {
+                userStore: useUserStore()
+            };
+        },
+
+        created() {
+            this.userStore.initAuth();
         }
     });
 </script>

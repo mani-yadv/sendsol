@@ -3,12 +3,12 @@
         <div v-if="isLoading" class="my-6 flex w-full justify-center">
             <Spinner />
         </div>
-        <div v-if="!isLoading" class="z-20 border-t-2 border-gigas-950 shadow-2xl">
+        <div v-if="!isLoading" class="border-gigas-950 z-20 border-t-2 shadow-2xl">
             <div v-if="tokensListStore.tokens.length" class="grid grid-cols-4">
                 <div
                     v-for="token in tokensListStore.tokens"
                     :key="token.id"
-                    class="cursor-pointer flex-col space-y-1 border border-gigas-50 p-1">
+                    class="border-gigas-50 cursor-pointer flex-col space-y-1 border p-1">
                     <TokensListItem :token="token" />
                 </div>
             </div>
@@ -16,15 +16,12 @@
     </div>
 </template>
 <script>
-    import TokensListItem from "~/components/tokens/TokensListItem.vue";
-    import Spinner from "~/components/common/Spinner.vue";
     import { useTokensActivitiesStore } from "~/stores/tokens/tokensActivities.js";
     import { useTokensListStore } from "~/stores/tokens/tokensList.js";
     import { useTokensRankingStore } from "~/stores/tokens/tokensRanking.js";
 
     export default {
         name: "TokensList",
-        components: { Spinner, TokensListItem },
         emits: ["selected:token"],
 
         setup() {

@@ -14,11 +14,9 @@
 </template>
 <script>
     import { useTokensListStore } from "~/stores/tokens/tokensList.js";
-    import TokensListItemRankings from "~/components/tokens/TokensListItemRankings.vue";
 
     export default {
         name: "TokensListItem",
-        components: { TokensListItemRankings },
         props: {
             token: {
                 type: Object,

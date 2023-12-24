@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div>
-            <SendSolHome />
+        <div class="mx-2">
+            <DashboardMain />
         </div>
     </div>
 </template>
@@ -9,6 +9,6 @@
 <script>
     import { defineComponent } from "vue";
     export default defineComponent({
-        name: "index"
+        name: "ride"
     });
 </script>

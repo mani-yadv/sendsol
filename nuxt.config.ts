@@ -27,6 +27,13 @@ export default defineNuxtConfig({
         }
     },
     devtools: { enabled: true },
+    components: [
+        { path: "~/components" },
+        { path: "~/modules/ride/components" },
+        { path: "~/modules/sendsol/components" },
+        { path: "~/components/common" }
+    ],
+    css: ["~/assets/scss/custom/main.scss"],
     modules: [
         // Pinia
         "@pinia/nuxt",
@@ -41,7 +48,7 @@ export default defineNuxtConfig({
         "@nuxt/ui",
 
         // Supabase
-        // "@nuxtjs/supabase",
+        "@nuxtjs/supabase",
 
         // Utilities modules
         "@vueuse/nuxt",
@@ -53,9 +60,9 @@ export default defineNuxtConfig({
         // Testing
         "nuxt-vitest"
     ],
-    // supabase: {
-    //     redirect: false
-    // },
+    supabase: {
+        redirect: false
+    },
     tailwindcss: {
         exposeConfig: true
     },
@@ -67,7 +74,7 @@ export default defineNuxtConfig({
         }
     },
     colorMode: {
-        preference: "cyberpunk", // default theme
+        preference: "dark", // default theme
         dataValue: "theme" // activate data-theme in <html> tag
     }
 });

@@ -1,9 +1,13 @@
 <template>
-    <div class="my-2">
-        <div class="max-w-screen flex items-center justify-between">
-            <div>RIDE</div>
-            <div class="flex items-center">
-                <WalletConnect />
+    <div>
+        <div class="flex-col">
+            <div class="max-w-screen flex items-center justify-between">
+                <LogoMain />
+
+                <div class="flex items-center space-x-4">
+                    <ProjectsCreateAction v-if="!isProjectCreatePage" />
+                    <UserMenu v-if="userStore.authenticated" />
+                </div>
             </div>
         </div>
     </div>
@@ -11,42 +15,23 @@
 
 <script lang="ts">
     import { defineComponent } from "vue";
-    // import { useSupabaseClient } from "#imports";
+    import { useUserStore } from "~/stores/user/userStore";
+    import UserMenu from "~/components/common/user/UserMenu.vue";
 
     export default defineComponent({
         name: "HeaderDefault",
+        components: { UserMenu },
 
-        data() {
+        setup() {
             return {
-                user: {},
-                state: {
-                    authenticated: false,
-                    loading: true
-                }
+                userStore: useUserStore()
             };
         },
-        mounted() {
-            // this.initAuth();
-        },
 
-        methods: {
-            // async initAuth() {
-            //     const supabase = useSupabaseClient();
-            //     const { data } = await supabase.auth.getUser();
-            //     if (data.user) {
-            //         this.user = data.user || {};
-            //         this.state.authenticated = true;
-            //     }
-            //     this.state.loading = false;
-            //
-            //     // Check if the URL contains the "code" parameter
-            //     if (this.$route.query.code) {
-            //         // TODO: Implement refresh access token using code
-            //         // https://supabase.com/docs/guides/auth/social-login/auth-google#using-the-oauth-flow-for-web
-            //     }
-            // }
+        computed: {
+            isProjectCreatePage() {
+                return this.$route.path.includes("/projects/create");
+            }
         }
     });
 </script>
-
-<style scoped></style>

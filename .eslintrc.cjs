@@ -123,7 +123,7 @@ module.exports = {
         },
         {
             // Override rule for specific Nuxt components or files
-            files: ["layouts/default.vue", "pages/index.vue"],
+            files: ["layouts/**/*.vue", "pages/**/*.vue", "pages/**/[*.vue", "app.vue"],
             rules: {
                 "vue/component-definition-name-casing": "off",
             },

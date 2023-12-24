@@ -3,14 +3,14 @@
         <div class="text-2xs">Sort by:</div>
         <div v-if="!rankingsStore.isLoading">
             <div
-                class="border border-gigas-300 bg-transparent p-1 text-2xs text-white"
+                class="border-gigas-300 border bg-transparent p-1 text-2xs text-white"
                 @click="tokensListStore.sortTokensByRanking">
                 Rankings
             </div>
         </div>
         <div v-if="!activitiesStore.isLoading">
             <div
-                class="border border-gigas-300 bg-transparent p-1 text-2xs text-white"
+                class="border-gigas-300 border bg-transparent p-1 text-2xs text-white"
                 @click="tokensListStore.sortTokensByActivitiesRanking">
                 Activities
             </div>

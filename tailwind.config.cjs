@@ -2,6 +2,7 @@
 export default {
     content: [
         "components/**/*.{vue,js,ts}",
+        "modules/**/*.{vue,js,ts}",
         "layouts/**/*.vue",
         "pages/**/*.vue",
         "composables/**/*.{js,ts}",
@@ -13,23 +14,6 @@ export default {
     ],
     theme: {
         extend: {
-            // Example theme colors
-            colors: {
-                gigas: {
-                    50: "#b7c0fa",
-                    100: "#a9b2f9",
-                    200: "#949ef4",
-                    300: "#777dee",
-                    400: "#5754e8",
-                    500: "#483bde",
-                    600: "#452bc5",
-                    700: "#3c2c81",
-                    800: "#33286c",
-                    900: "#28214f",
-                    950: "#0f0c1c",
-                },
-                // ... other colors as needed
-            },
             fontFamily: {
                 body: ["Roboto", "sans"],
                 logo: ["Dangrek", "sans"],
@@ -47,7 +31,36 @@ export default {
         themes: [
             "light",
             "dark",
+            "cupcake",
+            "bumblebee",
+            "emerald",
+            "corporate",
+            "synthwave",
+            "retro",
+            "cyberpunk",
+            "valentine",
+            "halloween",
+            "garden",
             "forest",
+            "aqua",
+            "lofi",
+            "pastel",
+            "fantasy",
+            "wireframe",
+            "black",
+            "luxury",
+            "dracula",
+            "cmyk",
+            "autumn",
+            "business",
+            "acid",
+            "lemonade",
+            "night",
+            "coffee",
+            "winter",
+            "dim",
+            "nord",
+            "sunset",
         ],
     },
 };

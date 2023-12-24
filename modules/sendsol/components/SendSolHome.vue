@@ -1,14 +1,15 @@
 <template>
     <div>
-        <div>
-            <SendSolHome />
-        </div>
+        <FeaturedProjects />
+
+        <ProjectsList />
     </div>
 </template>
 
-<script>
+<script lang="ts">
     import { defineComponent } from "vue";
+
     export default defineComponent({
-        name: "index"
+        name: "SendSolHome"
     });
 </script>
