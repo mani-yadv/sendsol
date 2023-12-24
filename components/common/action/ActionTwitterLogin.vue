@@ -7,7 +7,7 @@
             </div>
         </template>
         <template #content>
-            <TwitterLoginButton class="mb-2" @click="loginWithTwitter" />
+            <TwitterLoginButton class="mx-6 mb-2" @click="loginWithTwitter" />
         </template>
     </BottomDrawer>
 </template>

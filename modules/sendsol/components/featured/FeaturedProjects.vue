@@ -4,7 +4,7 @@
 
         <div class="carousel carousel-center glass rounded-box w-full space-x-4 bg-primary p-4">
             <div class="carousel-item">
-                <div class="stats shadow">
+                <div class="stats min-w-[250px] shadow-lg">
                     <div class="stat">
                         <div class="stat-figure text-secondary">
                             <svg
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <div class="stats shadow">
+                <div class="stats min-w-[250px] shadow-lg">
                     <div class="stat">
                         <div class="stat-figure text-secondary">
                             <svg
