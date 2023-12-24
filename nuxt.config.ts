@@ -23,7 +23,8 @@ export default defineNuxtConfig({
     runtimeConfig: {
         app: {
             solanaRpcUrl: "https://api.devnet.solana.com",
-            dextoolApiKey: "test"
+            dextoolApiKey: "test",
+            authRedirectURL: ""
         }
     },
     devtools: { enabled: true },

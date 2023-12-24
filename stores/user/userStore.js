@@ -8,7 +8,8 @@ export const useUserStore = defineStore("user", {
             loading: false,
             error: false
         },
-        supabase: useSupabaseClient()
+        supabase: useSupabaseClient(),
+        runtimeConfig: useRuntimeConfig()
     }),
     getters: {
         isLoading() {
@@ -41,7 +42,10 @@ export const useUserStore = defineStore("user", {
 
             return this.supabase.auth
                 .signInWithOAuth({
-                    provider: "twitter"
+                    provider: "twitter",
+                    options: {
+                        redirectTo: this.runtimeConfig.app.authRedirectURL
+                    }
                 })
                 .finally(() => {
                     this.state.loading = false;
