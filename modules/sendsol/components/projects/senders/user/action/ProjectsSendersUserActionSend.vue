@@ -65,6 +65,7 @@
             this.fetchAmountSentByUser();
         },
 
+       // TODO: clean up all the test code below and above. Remove console logs from the project
         methods: {
             async fetchSolBalance() {
                 const userWallet = this.userWalletStore.instance;

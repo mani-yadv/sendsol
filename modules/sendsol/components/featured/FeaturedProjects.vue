@@ -63,34 +63,6 @@
                 });
                 this.state.loading = false;
             },
-
-            async getTwitterFollowersCount() {
-                const supabase = useSupabaseClient();
-                const { data } = await supabase.auth.getSession();
-
-                const { session } = data;
-                console.log(session, {
-                    token: session.access_token,
-                    userId: session.user.user_metadata.provider_id
-                });
-                // console.log(session, {
-                //     token: session.access_token,
-                //     userId: session.user.user_metadata.provider_id
-                // });
-                // axios
-                //     .get("/api/twitter", {
-                //         params: {
-                //             token: session.provider_token,
-                //             userId: session.user.user_metadata.provider_id
-                //         }
-                //     })
-                //     .then((response) => {
-                //         console.log(response);
-                //     })
-                //     .catch((error) => {
-                //         console.log(error);
-                //     });
-            }
         }
     };
 </script>
