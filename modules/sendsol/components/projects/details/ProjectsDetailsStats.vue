@@ -5,10 +5,10 @@
                 <SVGSolanaOutline class="text-secondary" width="28" />
             </div>
             <div class="stat-title">Total sent</div>
-            <div class="stat-value text-primary">25</div>
+            <div class="stat-value text-primary">0</div>
             <div class="stat-desc flex items-center space-x-1">
                 <SVGUsdcOutline width="12" />
-                <span>2500</span>
+                <span>0</span>
             </div>
         </div>
         <div class="stat">
@@ -16,8 +16,8 @@
                 <SVGBolt />
             </div>
             <div class="stat-title">Total senders</div>
-            <div class="stat-value text-secondary">1500</div>
-            <div class="stat-desc">21k page views</div>
+            <div class="stat-value text-secondary">0</div>
+            <div class="stat-desc">Ends in 3 weeks</div>
         </div>
 
         <!-- For future -->
@@ -29,13 +29,13 @@
             <div class="stat-value text-secondary">2.6M</div>
             <div class="stat-desc">21% more than last month</div>
         </div>
-        <div class="stat">
+        <div v-if="project.is_coin_project" class="stat">
             <div class="stat-figure text-secondary">
                 <PhosphorIconCoins size="28" />
             </div>
-            <div class="stat-value">250M</div>
+            <div class="stat-value">{{ totalAllocatedQuantity }}</div>
             <div class="stat-desc">Allocated to senders</div>
-            <div class="stat-desc text-secondary">$SEND</div>
+            <div class="stat-desc text-secondary">${{ project.coin_ticker }}</div>
         </div>
 
         <div class="stat">
@@ -55,9 +55,22 @@
 
 <script lang="ts">
     import { defineComponent } from "vue";
+    import NumberHelper from "~/helpers/NumberHelper";
 
     export default defineComponent({
-        name: "ProjectsDetailsStats"
+        name: "ProjectsDetailsStats",
+        props: {
+            project: {
+                type: Object,
+                required: true
+            }
+        },
+
+        computed: {
+            totalAllocatedQuantity() {
+                return NumberHelper.formatKMB(this.project.total_allocated_quantity);
+            }
+        }
     });
 </script>
 

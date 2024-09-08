@@ -31,6 +31,9 @@
         computed: {
             isProjectCreatePage() {
                 return this.$route.path.includes("/projects/create");
+            },
+            isProjectDetailPage() {
+                return this.$route.path.match(/\/[a-zA-Z0-9]+/);
             }
         }
     });

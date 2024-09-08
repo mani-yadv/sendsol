@@ -1,7 +1,5 @@
 <template>
-    <div class="flex">
-        <WalletMultiButton dark />
-    </div>
+    <WalletMultiButton dark />
 </template>
 <script lang="ts">
     import { WalletMultiButton } from "solana-wallets-vue";
@@ -15,10 +13,24 @@
     });
 </script>
 
-<style scoped>
-    :deep(.swv-button) {
-        @apply inline-flex items-center justify-center px-3 h-6
-        border border-transparent rounded-md shadow-sm text-2xs
-        font-medium text-white bg-indigo-600 hover:bg-indigo-700;
+<style lang="scss">
+    .swv-dark {
+        @apply min-w-full;
+    }
+
+    .swv-dropdown {
+        @apply w-full;
+    }
+
+    .swv-button {
+        @apply btn bg-transparent border border-neutral rounded-xl hover:bg-neutral w-full;
+    }
+
+    .swv-button-trigger {
+        @apply btn bg-transparent border-2 border-neutral outline-neutral rounded-xl hover:bg-neutral w-full;
+    }
+
+    .swv-button:not([disabled]):hover {
+        @apply border-primary border border-primary bg-neutral;
     }
 </style>
