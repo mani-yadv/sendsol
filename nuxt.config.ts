@@ -24,7 +24,8 @@ export default defineNuxtConfig({
         app: {
             solanaRpcUrl: "https://api.devnet.solana.com",
             dextoolApiKey: "test",
-            authRedirectURL: ""
+            authRedirectURL: "",
+            url: ""
         }
     },
     devtools: { enabled: true },
@@ -57,6 +58,7 @@ export default defineNuxtConfig({
         "nuxt-phosphor-icons",
         "@formkit/auto-animate",
         "@nuxtjs/device",
+        "@vee-validate/nuxt",
 
         // Testing
         "nuxt-vitest"
@@ -66,6 +68,16 @@ export default defineNuxtConfig({
     },
     tailwindcss: {
         exposeConfig: true
+    },
+    veeValidate: {
+        // disable or enable auto imports
+        autoImports: true,
+        // Use different names for components
+        componentNames: {
+            Form: "VeeForm",
+            Field: "VeeField",
+            ErrorMessage: "VeeErrorMessage"
+        }
     },
     googleFonts: {
         families: {

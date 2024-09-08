@@ -12,6 +12,7 @@ module.exports = {
         computed: "readonly",
         useHead: "readonly",
         useRuntimeConfig: "readonly",
+        useSupabaseClient: "readonly",
     },
     extends: [
         "@nuxt/eslint-config",

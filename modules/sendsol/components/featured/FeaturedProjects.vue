@@ -1,57 +1,68 @@
 <template>
-    <div class="flex w-full flex-col space-y-5">
+    <div class="flex w-full flex-col space-y-4">
         <div class="text-xl font-bold">Featured projects</div>
 
-        <div class="carousel carousel-center glass rounded-box w-full space-x-4 bg-primary p-4">
-            <div class="carousel-item">
-                <div class="stats min-w-[250px] shadow-lg">
-                    <div class="stat">
-                        <div class="stat-figure text-secondary">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                class="inline-block h-8 w-8 stroke-current">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <div class="stat-title text-xs font-bold">SEND Token</div>
-                        <div class="stat-value text-secondary">2.6M</div>
-                        <div class="stat-desc">Total raised</div>
-                    </div>
-                </div>
+        <div v-if="state.loading" class="flex w-full justify-center py-4">
+            <div class="flex w-full flex-col gap-4">
+                <div class="skeleton h-32 w-full" />
             </div>
-            <div class="carousel-item">
-                <div class="stats min-w-[250px] shadow-lg">
-                    <div class="stat">
-                        <div class="stat-figure text-secondary">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                class="inline-block h-8 w-8 stroke-current">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <div class="stat-title text-xs font-bold">Dog wif hat</div>
-                        <div class="stat-value text-secondary">2.6M</div>
-                        <div class="stat-desc">Total raised</div>
-                    </div>
-                </div>
+        </div>
+
+        <div v-else class="flex w-full flex-col space-y-3">
+            <div class="carousel carousel-center glass w-full space-x-4 rounded-box bg-primary p-4">
+                <FeaturedProjectsItem
+                    v-for="(project, index) in projectsListFeaturedStore.projects"
+                    :id="`slide${index}`"
+                    :key="project.id"
+                    :project="project" />
+            </div>
+
+            <div v-if="$device.isDesktop" class="flex w-full justify-between px-4 opacity-50">
+                <a href="#slide1">❮</a>
+                <a href="#slide2">❯</a>
             </div>
         </div>
     </div>
 </template>
 <script lang="ts">
+    import { useProjectsListFeaturedStore } from "~/stores/projects/projectsListFeaturedStore";
+    import FeaturedProjectsItem from "~/modules/sendsol/components/featured/FeaturedProjectsItem.vue";
+
     export default {
-        name: "FeaturedProjects"
+        name: "FeaturedProjects",
+        components: { FeaturedProjectsItem },
+
+        setup() {
+            return {
+                projectsListFeaturedStore: useProjectsListFeaturedStore()
+            };
+        },
+        data() {
+            return {
+                pagination: {
+                    page: 0,
+                    perPage: 20,
+                    ended: false
+                },
+                state: {
+                    loading: true
+                }
+            };
+        },
+
+        created() {
+            this.fetchProjects();
+        },
+
+        methods: {
+            async fetchProjects() {
+                this.state.loading = true;
+                await this.projectsListFeaturedStore.listProjects({
+                    page: this.pagination.page,
+                    perPage: this.pagination.perPage
+                });
+                this.state.loading = false;
+            },
+        }
     };
 </script>

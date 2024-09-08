@@ -7,17 +7,19 @@
                 v-auto-animate
                 class="duration-1500 w-full translate-y-full bg-base-100 p-6 shadow-2xl transition-transform ease-in-out">
                 <!-- Close icon -->
-                <div class="flex justify-between">
-                    <slot name="header" />
+                <div class="mx-auto max-w-md">
+                    <div class="flex justify-between">
+                        <slot name="header" />
 
-                    <button v-if="canClose" class="btn btn-circle btn-sm" @click="handleClose">
-                        <PhosphorIconX size="16" />
-                    </button>
-                </div>
+                        <button v-if="canClose" class="btn btn-circle btn-sm" @click="handleClose">
+                            <PhosphorIconX size="16" />
+                        </button>
+                    </div>
 
-                <!-- Drawer content goes here -->
-                <div class="mt-14 pb-2">
-                    <slot name="content" />
+                    <!-- Drawer content goes here -->
+                    <div class="mt-14 pb-2">
+                        <slot name="content" />
+                    </div>
                 </div>
             </div>
         </div>

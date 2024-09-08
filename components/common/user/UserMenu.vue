@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        <details class="dropdown-end dropdown">
+        <details class="dropdown dropdown-end">
             <summary role="button" class="flex h-8 w-8 items-center">
                 <UserAvatar :user="userStore.formattedData" role="button" />
             </summary>
