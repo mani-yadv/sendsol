@@ -44,6 +44,17 @@ export default defineNuxtConfig({
             }
         }
     },
+    
+    nitro: {
+        experimental: {
+            wasm: true
+        },
+        esbuild: {
+            options: {
+                target: "esnext"
+            }
+        }
+    },
 
     render: {
         compressor: {
