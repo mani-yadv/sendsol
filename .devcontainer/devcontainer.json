@@ -10,6 +10,12 @@
 	],
 	"remoteUser": "node",
 	"updateRemoteUserUID": true,
+
+	"features": {
+		"ghcr.io/devcontainers/features/sshd:1": {
+			"version": "latest"
+		}
+	},
 	
 	// Performance optimizations
 	"containerEnv": {
