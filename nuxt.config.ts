@@ -53,6 +53,9 @@ export default defineNuxtConfig({
             options: {
                 target: "esnext"
             }
+        },
+        alias: {
+            "jayson/lib/client/browser": "jayson/lib/client/browser/index.js"
         }
     },
 
