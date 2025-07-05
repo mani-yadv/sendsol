@@ -4,7 +4,7 @@
             <div class="flex items-center space-x-2">
                 <div v-if="selectedToken.logoURI" class="rounded-full">
                     <!-- eslint-disable-next-line prettier/prettier -->
-                    <img :src="selectedToken.logoURI" class="h-8 w-8" alt="token img" />
+                    <img :src="selectedToken.logoURI" class="size-8" alt="token img" />
                 </div>
                 <div class="flex flex-col items-start space-y-1">
                     <div class="text-base">

@@ -1,6 +1,6 @@
 <template>
     <div class="flex w-full flex-col space-y-4">
-        <div class="text-xl font-bold">Featured projects</div>
+        <div class="text-xl font-bold">Featured</div>
 
         <div v-if="state.loading" class="flex w-full justify-center py-4">
             <div class="flex w-full flex-col gap-4">
@@ -24,7 +24,7 @@
         </div>
     </div>
 </template>
-<script lang="ts">
+<script>
     import { useProjectsListFeaturedStore } from "~/stores/projects/projectsListFeaturedStore";
     import FeaturedProjectsItem from "~/modules/sendsol/components/featured/FeaturedProjectsItem.vue";
 
@@ -62,7 +62,7 @@
                     perPage: this.pagination.perPage
                 });
                 this.state.loading = false;
-            },
+            }
         }
     };
 </script>

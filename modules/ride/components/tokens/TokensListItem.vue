@@ -3,7 +3,7 @@
         <div class="flex items-start space-x-2" @click="handleSelected">
             <div v-if="token.logoURI" class="rounded-full">
                 <!-- eslint-disable-next-line prettier/prettier -->
-                <img :src="token.logoURI" class="h-4 w-4" alt="token img" />
+                <img :src="token.logoURI" class="size-4" alt="token img" />
             </div>
             <div class="text-2xs">
                 {{ token.symbol }}

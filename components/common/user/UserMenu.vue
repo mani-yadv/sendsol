@@ -1,11 +1,11 @@
 <template>
     <div class="flex">
         <details class="dropdown dropdown-end">
-            <summary role="button" class="flex h-8 w-8 items-center">
+            <summary role="button" class="flex size-8 items-center">
                 <UserAvatar :user="userStore.formattedData" role="button" />
             </summary>
 
-            <ul class="menu dropdown-content rounded-box z-[1] my-1 border border-neutral bg-base-200 p-0 shadow">
+            <ul class="menu dropdown-content z-[1] my-1 rounded-box border border-neutral bg-base-200 p-0 shadow">
                 <li>
                     <div class="px-8 text-xs" @click="handleLogout">Logout</div>
                 </li>

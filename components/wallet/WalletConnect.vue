@@ -1,5 +1,7 @@
 <template>
-    <WalletMultiButton dark />
+    <div class="swv-dark rounded-lg border border-neutral">
+        <WalletMultiButton dark />
+    </div>
 </template>
 <script lang="ts">
     import { WalletMultiButton } from "solana-wallets-vue";
@@ -15,7 +17,7 @@
 
 <style lang="scss">
     .swv-dark {
-        @apply min-w-full;
+        @apply w-full;
     }
 
     .swv-dropdown {
@@ -27,7 +29,7 @@
     }
 
     .swv-button-trigger {
-        @apply btn bg-transparent border-2 border-neutral outline-neutral rounded-xl hover:bg-neutral w-full;
+        @apply btn bg-transparent border border-neutral outline-neutral rounded-xl hover:bg-neutral w-full;
     }
 
     .swv-button:not([disabled]):hover {

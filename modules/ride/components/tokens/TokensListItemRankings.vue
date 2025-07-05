@@ -2,7 +2,7 @@
     <div class="flex w-full items-center" :class="[{ 'justify-between': tokenRanking }, { 'justify-end': !selected }]">
         <div v-if="tokenRanking" class="flex items-center justify-between space-x-0.5 text-success">
             <span class="text-2xs">{{ tokenRanking }}</span>
-            <PhosphorIconArrowUp class="inline-block h-2 w-2" />
+            <PhosphorIconArrowUp class="inline-block size-2" />
         </div>
         <div v-if="tokensActivityRating" class="flex items-center justify-between space-x-0.5">
             <span class="text-2xs">{{ tokensActivityRating }}</span>

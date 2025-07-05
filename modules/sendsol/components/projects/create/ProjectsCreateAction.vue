@@ -2,8 +2,8 @@
     <div class="flex items-center">
         <NuxtLink href="/projects/create">
             <button class="btn btn-primary btn-sm px-4">
-                <PhosphorIconWallet class="h-4 w-4" />
-                <span class="text-xs">Create</span>
+                <PhosphorIconLightning size="16" />
+                <span class="text-xs font-bold">Start project</span>
             </button>
         </NuxtLink>
     </div>

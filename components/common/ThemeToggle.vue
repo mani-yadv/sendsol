@@ -8,7 +8,7 @@
             @click="isDark = !isDark" />
 
         <template #fallback>
-            <div class="h-8 w-8" />
+            <div class="size-8" />
         </template>
     </ClientOnly>
 </template>

@@ -1,0 +1,22 @@
+{
+    "containers": {
+        "resources": {
+            "memory": "4GB",
+            "swap": "2GB",
+            "cpus": 4
+        },
+        "network": {
+            "dns": ["1.1.1.1", "8.8.8.8"],
+            "mtu": 1500
+        },
+        "storage": {
+            "size": "32GB"
+        }
+    },
+    "vm": {
+        "resources": {
+            "memory": "8GB",
+            "cpus": 4
+        }
+    }
+}

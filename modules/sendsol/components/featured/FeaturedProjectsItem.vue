@@ -4,27 +4,31 @@
             <div class="stats min-w-[250px] shadow-lg">
                 <div class="stat">
                     <div class="stat-figure text-secondary">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            class="inline-block h-8 w-8 stroke-current">
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
+                        <div class="size-12">
+                            <UserAvatar
+                                :user="{
+                                    avatar: project.creator_image,
+                                    name: project.creator_name
+                                }"
+                                :external-profile-link="project.creator_x_url"
+                                show-online-status />
+                        </div>
                     </div>
-                    <div class="stat-title text-xs font-bold">{{ project.name }}</div>
-                    <div class="stat-value text-secondary">2.6M</div>
+                    <div class="stat-title flex items-center gap-1 text-xs font-bold">
+                        <span>{{ project.name }}</span>
+                        <PhosphorIconCheckCircle class="text-primary" size="12" />
+                    </div>
+                    <div class="stat-value text-secondary">{{ numberHelper.formatSol(project.total_raised) }}</div>
                     <div class="stat-desc">Total raised</div>
                 </div>
             </div>
         </NuxtLink>
     </div>
 </template>
-<script lang="ts">
+
+<script>
+    import NumberHelper from "~/helpers/NumberHelper";
+
     export default {
         name: "FeaturedProjectsItem",
         props: {
@@ -32,6 +36,11 @@
                 type: Object,
                 required: true
             }
+        },
+        data() {
+            return {
+                numberHelper: NumberHelper
+            };
         }
     };
 </script>

@@ -30,12 +30,12 @@
                 <ProjectsDetailsStats :project="projectStore.project" />
             </div>
             <div>
-                <ProjectsSenders />
+                <ProjectsSenders :project="projectStore.project" />
             </div>
         </div>
     </div>
 </template>
-<script lang="ts">
+<script>
     import { defineComponent } from "vue";
     import { useProjectStore } from "~/stores/project/projectStore";
     export default defineComponent({

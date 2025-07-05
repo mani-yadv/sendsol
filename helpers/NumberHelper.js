@@ -19,4 +19,23 @@ export default class NumberHelper {
 
         return num;
     }
+
+    static formatSol(lamports) {
+        if (!lamports) return "0 SOL";
+
+        // Convert to SOL (lamports to SOL)
+        const sol = Math.floor((lamports / 1e9) * 1000) / 1000;
+
+        if (sol === 0) return "0 SOL";
+
+        if (sol >= 1_000_000) {
+            const millions = Math.floor((sol / 1_000_000) * 1000) / 1000;
+            return `${millions.toFixed(3)}M SOL`;
+        }
+        if (sol >= 1_000) {
+            const thousands = Math.floor((sol / 1_000) * 1000) / 1000;
+            return `${thousands.toFixed(3)}K SOL`;
+        }
+        return `${sol.toFixed(3)} SOL`;
+    }
 }

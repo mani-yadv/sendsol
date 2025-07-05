@@ -44,7 +44,7 @@ export const useUserStore = defineStore("user", {
                 .signInWithOAuth({
                     provider: "twitter",
                     options: {
-                        redirectTo: `${this.runtimeConfig.app.authRedirectURL}`
+                        redirectTo: `${this.runtimeConfig.public.authRedirectURL}`
                     }
                 })
                 .finally(() => {

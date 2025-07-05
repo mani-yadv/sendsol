@@ -1,0 +1,179 @@
+{
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"forwardPorts": [3001, 24678],
+	"postCreateCommand": "chmod +x ./setup-keybindings.sh && ./setup-keybindings.sh",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/sendsol,type=bind,consistency=cached",
+	"mounts": [
+		"source=${localEnv:HOME}/.npm,target=/home/node/.npm,type=bind,consistency=cached"
+	],
+	"remoteUser": "node",
+	"updateRemoteUserUID": true,
+	
+	// Performance optimizations
+	"containerEnv": {
+		"CHOKIDAR_USEPOLLING": "true",
+		"WATCHPACK_POLLING": "true",
+		"NODE_OPTIONS": "--max-old-space-size=8192"
+	},
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				// AI Assistance
+				"GitHub.copilot",
+				"GitHub.copilot-chat",
+				"GitHub.copilot-labs",
+				
+				// Vue & Nuxt
+				"Vue.volar",
+				"Vue.vscode-typescript-vue-plugin",
+				"Nuxtr.nuxtr-vscode",
+				"MartinsZeltins.vue-alias-chaser",
+				"hollowtree.vue-snippets",
+				
+				// TypeScript/JavaScript
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"christian-kohler.npm-intellisense",
+				"christian-kohler.path-intellisense",
+				
+				// CSS & Styling
+				"bradlc.vscode-tailwindcss",
+				"csstools.postcss",
+				"mrmlnc.vscode-scss",
+				
+				// Git Integration
+				"eamodio.gitlens",
+				"ChaitanyaShahare.lazygit",
+				"mhutchie.git-graph",
+				
+				// Developer Experience
+				"naumovs.color-highlight",
+				"wayou.vscode-todo-highlight",
+				"formulahendry.auto-rename-tag",
+				"formulahendry.auto-close-tag",
+				
+				// Themes & UI
+				"dracula-theme.theme-dracula",
+				"vscode-icons-team.vscode-icons",
+				"k--kato.intellij-idea-keybindings",
+				
+				// Others
+				"nextchaptersoftware.unblocked-vscode",
+				"ms-vscode.vscode-speech"
+			],
+			"settings": {
+				"workbench.colorTheme": "Dracula Theme",
+				"workbench.iconTheme": "vscode-icons",
+				"git.autofetch": false,
+				"diffEditor.ignoreTrimWhitespace": true,
+				"diffEditor.hideUnchangedRegions.enabled": true,
+				"diffEditor.renderSideBySide": false,
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				
+				// Formatting and Linting
+				"editor.formatOnSave": true,
+				"editor.formatOnPaste": true,
+				"editor.codeActionsOnSave": {
+					"source.fixAll": true,
+					"source.fixAll.eslint": "explicit",
+					"source.organizeImports": "explicit"
+				},
+				"eslint.format.enable": true,
+				"eslint.alwaysShowStatus": true,
+				"eslint.validate": [
+					"javascript",
+					"typescript",
+					"vue"
+				],
+				"prettier.requireConfig": true,
+				"prettier.singleQuote": false,
+				"prettier.trailingComma": "none",
+				
+				// File type specific settings
+				"[vue]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode",
+					"editor.formatOnSave": true
+				},
+				"[javascript]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode",
+					"editor.formatOnSave": true
+				},
+				"[typescript]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode",
+					"editor.formatOnSave": true
+				},
+				"[json]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode",
+					"editor.formatOnSave": true
+				},
+				"[scss]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode",
+					"editor.formatOnSave": true
+				},
+				"[css]": {
+					"editor.defaultFormatter": "esbenp.prettier-vscode",
+					"editor.formatOnSave": true
+				},
+				
+				// Editor settings
+				"editor.fontFamily": "JetBrains Mono",
+				"editor.fontSize": 13,
+				"editor.fontLigatures": true,
+				"editor.bracketPairColorization.enabled": true,
+				"editor.guides.bracketPairs": true,
+				"editor.linkedEditing": true,
+				"editor.suggestSelection": "first",
+				"window.zoomLevel": 0.8,
+				
+				// Git settings
+				"git.openDiffOnClick": false,
+				"githubPullRequests.notifications": "pullRequests",
+				"gitlens.hovers.currentLine.over": "line",
+				
+				// Performance optimization
+				"files.maxMemoryForLargeFilesMB": 4096,
+				"typescript.tsserver.maxTsServerMemory": 4096,
+				"editor.minimap.enabled": false,
+				"workbench.startupEditor": "none",
+				"workbench.editor.enablePreview": false,
+				"breadcrumbs.enabled": false,
+				"editor.parameterHints.enabled": false,
+				"files.watcherExclude": {
+					"**/node_modules/**": true,
+					"**/dist/**": true
+				},
+				"search.exclude": {
+					"**/node_modules": true,
+					"**/dist": true
+				},
+				"typescript.disableAutomaticTypeAcquisition": true,
+				
+				// Error Lens
+				"errorLens.enabledDiagnosticLevels": [
+					"error",
+					"warning",
+					"info"
+				],
+				"errorLens.messageEnabled": true,
+				
+				// Todo Highlight
+				"todohighlight.keywords": [
+					{
+						"text": "TODO:",
+						"color": "#FF8C00",
+						"backgroundColor": "transparent"
+					},
+					{
+						"text": "FIXME:",
+						"color": "#FF2D00",
+						"backgroundColor": "transparent"
+					}
+				]
+			}
+		}
+	}
+}

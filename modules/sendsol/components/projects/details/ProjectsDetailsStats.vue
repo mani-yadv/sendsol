@@ -5,10 +5,10 @@
                 <SVGSolanaOutline class="text-secondary" width="28" />
             </div>
             <div class="stat-title">Total sent</div>
-            <div class="stat-value text-primary">0</div>
-            <div class="stat-desc flex items-center space-x-1">
+            <div class="stat-value text-primary">{{ numberHelper.formatSol(project.total_raised) }}</div>
+            <div v-if="usdcAmount" class="stat-desc flex items-center space-x-1">
                 <SVGUsdcOutline width="12" />
-                <span>0</span>
+                <span>${{ usdcAmount }}</span>
             </div>
         </div>
         <div class="stat">
@@ -16,46 +16,52 @@
                 <SVGBolt />
             </div>
             <div class="stat-title">Total senders</div>
-            <div class="stat-value text-secondary">0</div>
-            <div class="stat-desc">Ends in 3 weeks</div>
+            <div class="stat-value text-secondary">{{ project.total_senders || 0 }}</div>
+            <div class="stat-desc">{{ projectTimeLeft }}</div>
         </div>
 
-        <!-- For future -->
-        <div v-if="false" class="stat">
+        <div class="stat">
             <div class="stat-figure text-secondary">
-                <SVGBolt />
+                <PhosphorIconTarget size="28" />
             </div>
-            <div class="stat-title">Page Views</div>
-            <div class="stat-value text-secondary">2.6M</div>
-            <div class="stat-desc">21% more than last month</div>
-        </div>
-        <div v-if="project.is_coin_project" class="stat">
-            <div class="stat-figure text-secondary">
-                <PhosphorIconCoins size="28" />
+            <div class="stat-title">Goal</div>
+            <div class="stat-value text-secondary">{{ goalDisplay }}</div>
+            <div v-if="shouldShowEndDate" class="stat-desc flex items-center space-x-1">
+                <PhosphorIconCalendar size="12" />
+                <div>{{ endDateDisplay }}</div>
             </div>
-            <div class="stat-value">{{ totalAllocatedQuantity }}</div>
-            <div class="stat-desc">Allocated to senders</div>
-            <div class="stat-desc text-secondary">${{ project.coin_ticker }}</div>
         </div>
 
         <div class="stat">
             <div class="stat-figure text-secondary">
                 <div class="avatar online">
-                    <div class="w-16 rounded-full">
-                        <img src="https://pbs.twimg.com/profile_images/1588506605548716033/DsJJFGDX_400x400.jpg" />
+                    <div
+                        v-if="!project.avatar_url"
+                        class="flex w-16 items-center justify-center rounded-full bg-base-200">
+                        <PhosphorIconUser size="32" weight="bold" />
+                    </div>
+                    <div v-else class="w-16 rounded-full">
+                        <img :src="project.avatar_url" />
                     </div>
                 </div>
             </div>
-            <div class="stat-value">3.33k</div>
-            <div class="stat-desc">Followers</div>
-            <div class="stat-desc text-secondary">Under review</div>
+            <div class="stat-desc">Creator</div>
+            <div
+                v-if="project.username"
+                class="stat-value cursor-pointer text-[18px] hover:text-primary"
+                @click="handleOpenXProfile">
+                @{{ project.username }}
+            </div>
+            <div class="stat-desc" :class="reviewStatusColor">{{ reviewStatusDisplay }}</div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
+<script>
     import { defineComponent } from "vue";
     import NumberHelper from "~/helpers/NumberHelper";
+    import DateHelper from "~/helpers/DateHelper";
+    import { PROJECT_REVIEW_STATUS_DISPLAY, PROJECT_REVIEW_STATUS_COLOR } from "@/constants/projectReviewStatus";
 
     export default defineComponent({
         name: "ProjectsDetailsStats",
@@ -65,10 +71,68 @@
                 required: true
             }
         },
-
+        data() {
+            return {
+                numberHelper: NumberHelper,
+                usdcAmount: ""
+            };
+        },
         computed: {
-            totalAllocatedQuantity() {
-                return NumberHelper.formatKMB(this.project.total_allocated_quantity);
+            projectTimeLeft() {
+                if (!this.project.end_date) return "";
+                return `Ends ${DateHelper.formatTimeAgo(this.project.end_date)}`;
+            },
+            goalDisplay() {
+                return this.project.goal_amount ? this.numberHelper.formatSol(this.project.goal_amount) : "∞";
+            },
+            endDateDisplay() {
+                if (!this.project.end_date) return "";
+                return `Ends on ${DateHelper.formatToLocalDate(this.project.end_date)}`;
+            },
+            shouldShowEndDate() {
+                if (!this.project.end_date) return false;
+
+                const endDate = new Date(this.project.end_date);
+                const oneMonthFromNow = new Date();
+                oneMonthFromNow.setMonth(oneMonthFromNow.getMonth() + 1);
+
+                return endDate <= oneMonthFromNow;
+            },
+            reviewStatusDisplay() {
+                return PROJECT_REVIEW_STATUS_DISPLAY[this.project.review_status] || "Under Review";
+            },
+            reviewStatusColor() {
+                return PROJECT_REVIEW_STATUS_COLOR[this.project.review_status] || "text-info";
+            }
+        },
+        watch: {
+            "project.total_raised": {
+                immediate: true,
+                async handler(newAmount) {
+                    if (!newAmount) {
+                        this.usdcAmount = "";
+                        return;
+                    }
+                    try {
+                        const response = await fetch(
+                            "https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd"
+                        );
+                        const data = await response.json();
+                        const solPrice = data.solana.usd;
+                        const solAmount = newAmount / 1e9; // Convert lamports to SOL
+                        this.usdcAmount = (solAmount * solPrice).toFixed(4);
+                    } catch (error) {
+                        console.error("Error fetching SOL price:", error);
+                        this.usdcAmount = "";
+                    }
+                }
+            }
+        },
+        methods: {
+            handleOpenXProfile() {
+                if (this.project.x_profile_url) {
+                    window.open(this.project.x_profile_url, "_blank");
+                }
             }
         }
     });

@@ -1,7 +1,13 @@
 <template>
     <div>
         <!-- Form -->
-        <VeeForm :validation-schema="validationSchema" @submit="handleSubmit">
+        <VeeForm
+            v-slot="{ errors }"
+            ref="form"
+            :validation-schema="validationSchema"
+            :validate-on-mount="false"
+            @submit="handleSubmit"
+            @invalid-submit="handleInvalidSubmit">
             <div class="z-10 flex w-full flex-col gap-1">
                 <label class="form-control h-32 w-full">
                     <span class="label">
@@ -11,7 +17,7 @@
                         v-model.trim="input.name"
                         as="input"
                         name="name"
-                        placeholder="Dog wif hat"
+                        placeholder="ie. SendSol AI"
                         class="input input-bordered" />
                     <VeeErrorMessage name="name" class="m-2 text-xs text-error/75" />
                 </label>
@@ -24,9 +30,12 @@
                         v-model.trim="input.handle"
                         as="input"
                         name="handle"
-                        placeholder="dog_wif_hat"
-                        class="input input-bordered" />
+                        type="text"
+                        class="input input-bordered w-full"
+                        placeholder="project-handle"
+                        @input="handleHandleInput" />
                     <VeeErrorMessage name="handle" class="m-2 text-xs text-error/75" />
+                    <div v-if="handleFieldError" class="m-2 text-xs text-error/75">{{ handleFieldError }}</div>
 
                     <span class="m-3 text-right text-2xs">
                         <span v-show="input.handle">
@@ -40,106 +49,83 @@
 
                 <label class="form-control h-32 w-full">
                     <span class="label">
-                        <span class="label-text font-bold">Are you allocating coins to senders?</span>
+                        <span class="label-text font-bold">Pitch Deck Link</span>
+                        <span class="label-text-alt">(Optional)</span>
                     </span>
                     <VeeField
-                        v-model="input.isCoinProject"
-                        as="select"
-                        class="select select-bordered"
-                        name="isCoinProject">
-                        <option disabled value="">Please select an option</option>
-                        <option value="true">Yes</option>
-                        <option value="false">No</option>
-                    </VeeField>
-                    <VeeErrorMessage name="isCoinProject" class="m-2 text-xs text-error/75" />
-                </label>
-
-                <label v-if="isCoinProject" class="form-control h-32 w-full">
-                    <span class="label">
-                        <span class="label-text font-bold">Ticker of the coin allocated</span>
-                    </span>
-
-                    <VeeField
-                        v-model.trim="input.coinTicker"
+                        v-model.trim="input.pitchDeckUrl"
                         as="input"
-                        name="coinTicker"
-                        placeholder="wif"
+                        name="pitchDeckUrl"
+                        placeholder="https://example.com/pitch"
                         class="input input-bordered" />
-                    <VeeErrorMessage name="coinTicker" class="m-2 text-xs text-error/75" />
+                    <VeeErrorMessage name="pitchDeckUrl" class="m-2 text-xs text-error/75" />
                 </label>
 
-                <label v-if="isCoinProject" class="form-control h-32 w-full">
+                <label class="form-control h-32 w-full">
                     <span class="label">
-                        <span class="label-text font-bold">Coin allocation type</span>
+                        <span class="label-text font-bold">Goal Amount (SOL)</span>
+                        <span class="label-text-alt">(Optional)</span>
                     </span>
-
                     <VeeField
-                        v-model="input.allocationType"
-                        as="select"
-                        class="select select-bordered"
-                        name="allocationType">
-                        <option disabled value="">Select how you want to distribute coins allocation</option>
-                        <option value="proportionate">Proportionate to SOL Sent</option>
-                        <option value="fixed">Fixed allocation per Sender</option>
-                        <option value="not_revealed">Allocation details not revealed</option>
-                    </VeeField>
-                    <VeeErrorMessage name="allocationType" class="m-2 text-xs text-error/75" />
-                </label>
-
-                <label
-                    v-if="isCoinProject"
-                    class="form-control w-full"
-                    :class="input.totalAllocatedQuantity ? 'min-h-32' : 'h-36'">
-                    <span class="label">
-                        <span class="label-text font-bold">Total allocated coins (for all senders)</span>
-                    </span>
-
-                    <VeeField
-                        v-model="input.totalAllocatedQuantity"
+                        v-model.trim="input.goalAmount"
                         as="input"
                         type="number"
+                        step="0.0001"
                         min="0"
-                        name="totalAllocatedQuantity"
-                        placeholder="20000000"
+                        name="goalAmount"
+                        placeholder="Enter goal amount in SOL"
                         class="input input-bordered" />
-                    <VeeErrorMessage name="totalAllocatedQuantity" class="m-2 text-xs text-error/75" />
+                    <VeeErrorMessage name="goalAmount" class="m-2 text-xs text-error/75" />
+                </label>
 
-                    <span v-if="input.totalAllocatedQuantity" class="label mx-2 mt-1 flex justify-end">
-                        <span class="label-text-alt">
-                            Formatted: {{ input.totalAllocatedQuantity.toLocaleString() }}
+                <label class="form-control h-32 w-full">
+                    <span class="label">
+                        <span class="label-text font-bold">X Profile Link</span>
+                        <span class="label-text-alt">(Optional)</span>
+                    </span>
+                    <VeeField
+                        v-model.trim="input.xProfileUrl"
+                        as="input"
+                        name="xProfileUrl"
+                        placeholder="https://x.com/elon"
+                        class="input input-bordered" />
+                    <VeeErrorMessage name="xProfileUrl" class="m-2 text-xs text-error/75" />
+                </label>
+
+                <label class="form-control h-32 w-full">
+                    <span class="label">
+                        <span class="label-text font-bold">Project Website</span>
+                        <span class="label-text-alt">(Optional)</span>
+                    </span>
+                    <VeeField
+                        v-model.trim="input.websiteUrl"
+                        as="input"
+                        name="websiteUrl"
+                        placeholder="https://example.com"
+                        class="input input-bordered" />
+                    <VeeErrorMessage name="websiteUrl" class="m-2 text-xs text-error/75" />
+                </label>
+
+                <div>
+                    <label class="form-control w-full">
+                        <span class="label">
+                            <span class="label-text font-bold">Duration</span>
                         </span>
-                    </span>
-                </label>
+                        <VeeField v-model="input.duration" as="select" class="select select-bordered" name="duration">
+                            <option disabled value="">Select project duration</option>
+                            <option value="1">1 Week</option>
+                            <option value="2">2 Weeks</option>
+                            <option value="3">3 Weeks</option>
+                            <option value="4">1 Month</option>
+                        </VeeField>
+                        <VeeErrorMessage name="duration" class="m-2 text-xs text-error/75" />
+                    </label>
 
-                <label class="form-control h-32 w-full">
-                    <span class="label">
-                        <span class="label-text font-bold">SOL Transfer Duration</span>
-                    </span>
-                    <VeeField v-model="input.duration" as="select" class="select select-bordered" name="duration">
-                        <option disabled value="">Select the duration of this project</option>
-                        <option value="1">1 week</option>
-                        <option value="2">2 weeks</option>
-                        <option value="3">3 weeks</option>
-                        <option value="4">4 weeks</option>
-                    </VeeField>
+                    <!-- Hidden duration field to maintain form validation -->
+                    <VeeField v-model="input.duration" name="duration" type="hidden" />
+                </div>
 
-                    <VeeErrorMessage name="duration" class="m-2 text-xs text-error/75" />
-                </label>
-
-                <label class="form-control h-32 w-full">
-                    <span class="label">
-                        <span class="label-text font-bold">Wallet to receive SOL</span>
-                    </span>
-
-                    <span class="w-full">
-                        <WalletConnect class="mt-2" />
-                    </span>
-
-                    <VeeField v-model.trim="input.walletAddress" as="input" type="hidden" name="walletAddress" />
-                    <VeeErrorMessage name="walletAddress" class="m-2 text-xs text-error/75" />
-                </label>
-
-                <label class="form-control w-full">
+                <label class="form-control w-full pt-4">
                     <span class="label">
                         <span class="label-text font-bold">
                             Describe your project
@@ -152,7 +138,7 @@
                         as="textarea"
                         name="description"
                         placeholder="You can include project description and any relevant links here"
-                        class="min-h-24 textarea textarea-bordered max-h-36" />
+                        class="textarea textarea-bordered max-h-36 min-h-24" />
                     <VeeErrorMessage name="description" class="m-2 text-xs text-error/75" />
                     <span class="label flex justify-end">
                         <span class="label-text-alt" :class="{ 'text-error': input.description.length > 250 }">
@@ -160,6 +146,19 @@
                         </span>
                         <span class="label-text-alt">/ 250</span>
                     </span>
+                </label>
+
+                <label class="form-control h-32 w-full">
+                    <span class="label">
+                        <span class="label-text font-bold">Wallet to receive SOL</span>
+                    </span>
+
+                    <span class="flex w-full justify-center">
+                        <WalletConnect class="mt-2 rounded-xl border border-primary/25" />
+                    </span>
+
+                    <VeeField v-model.trim="input.walletAddress" as="input" type="hidden" name="walletAddress" />
+                    <VeeErrorMessage name="walletAddress" class="m-2 text-xs text-error/75" />
                 </label>
             </div>
 
@@ -181,9 +180,10 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
     import { useWallet } from "solana-wallets-vue";
     import { defineComponent } from "vue";
+    import { debounce } from "lodash";
     import createSchema from "./validation/schema";
     import { useUserStore } from "~/stores/user/userStore";
     import { useProjectStore } from "~/stores/project/projectStore";
@@ -202,50 +202,43 @@
                 input: {
                     name: "",
                     handle: "",
-                    isCoinProject: "true",
-                    coinTicker: "",
-                    allocationType: "",
-                    totalAllocatedQuantity: "",
+                    pitchDeckUrl: "",
+                    goalAmount: "",
+                    xProfileUrl: "",
+                    websiteUrl: "",
                     duration: "",
                     walletAddress: "",
                     description: ""
                 },
                 wallet: {
                     connected: false,
-                    instance: null as any | null
+                    instance: null
                 },
                 state: {
                     loading: false,
                     error: false
-                }
+                },
+                handleFieldError: null
             };
         },
 
         computed: {
             projectUrl() {
-                // Use handle for creating project url
-                // only letters numbers and underscores can be used
-                const handle = this.input.handle.replace(/[^a-zA-Z0-9_]/g, "");
                 const currentDomain = window.location.hostname;
+                const handle = this.input.handle || "";
                 return `https://${currentDomain}/${handle}`;
             },
-            isCoinProject() {
-                return this.input.isCoinProject === "true";
-            },
             validationSchema() {
-                if (this.isCoinProject) {
-                    return createSchema(this.supabase);
-                }
-                return createSchema(this.supabase).omit(["coinTicker", "allocationType", "totalAllocatedQuantity"]);
+                return createSchema(this.supabase).omit([
+                    "coinTicker",
+                    "allocationType",
+                    "totalAllocatedQuantity",
+                    "isCoinProject"
+                ]);
             }
         },
 
         watch: {
-            "input.handle": {
-                handler() {
-                    this.input.handle = this.input.handle.toLowerCase();
-                }
-            },
             "wallet.connected": {
                 handler() {
                     if (this.wallet.connected) {
@@ -253,6 +246,12 @@
                     } else {
                         this.input.walletAddress = "";
                     }
+                }
+            },
+
+            "input.handle": {
+                handler() {
+                    this.input.handle = this.input.handle.toLowerCase();
                 }
             }
         },
@@ -264,42 +263,90 @@
         },
 
         methods: {
-            handleSubmit() {
-                this.state.loading = true;
-                this.projectStore
-                    .createProject(this.getParams())
-                    .then(() => {
-                        this.handleSuccess();
-                    })
-                    .catch(() => {
-                        this.state.error = true;
-                    })
-                    .finally(() => {
-                        this.state.loading = false;
+            handleHandleInput: debounce(async function () {
+                const handle = this.input.handle;
+
+                // Reset error
+                this.handleFieldError = null;
+
+                // Skip empty handles
+                if (!handle) return;
+
+                // Basic validations
+                if (handle.length < 3) {
+                    this.handleFieldError = "Project handle must be at least 3 characters";
+                    return;
+                }
+
+                if (!/^[a-zA-Z0-9_]+$/.test(handle)) {
+                    this.handleFieldError = "Only letters, numbers and underscore allowed";
+                    return;
+                }
+
+                // Check uniqueness
+                const { data } = await this.supabase.from("projects").select("handle").eq("handle", handle).single();
+
+                if (data) {
+                    this.handleFieldError = "Handle is already in use";
+                }
+            }, 300),
+
+            scrollToError() {
+                // Try to find either custom handle error or VeeValidate error
+                const errorElement = document.querySelector('[class*="text-error"]'); // Will match any class containing text-error
+
+                if (errorElement) {
+                    // Find the closest input field to highlight
+                    const inputField = errorElement.closest("label")?.querySelector("input, select, textarea");
+                    if (inputField) {
+                        inputField.focus();
+                    }
+
+                    // Smooth scroll with offset for better visibility
+                    errorElement.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
                     });
+                }
             },
 
-            handleSuccess() {
-                if (this.projectStore.project?.handle) {
-                    const handle = this.projectStore.project.handle;
+            handleInvalidSubmit() {
+                this.scrollToError();
+            },
 
-                    const runtimeConfig = useRuntimeConfig();
-                    window.location.href = `${runtimeConfig.app.url}/${handle}`;
+            async handleSubmit() {
+                try {
+                    // Run handle validation one last time
+                    await this.handleHandleInput();
+
+                    if (this.handleFieldError) {
+                        this.scrollToError();
+                        return;
+                    }
+
+                    // Validate other fields
+                    const result = await this.$refs.form?.validate();
+                    if (!result?.valid) {
+                        this.scrollToError();
+                        return;
+                    }
+
+                    this.state.loading = true;
+                    await this.projectStore.createProject(this.getParams());
+
+                    if (this.projectStore.project?.handle) {
+                        window.location.href = `/${this.projectStore.project.handle}`;
+                    }
+                } catch (error) {
+                    console.error("Form submission error:", error);
+                    this.state.error = true;
+                    this.state.loading = false;
                 }
             },
 
             getParams() {
-                if (!this.isCoinProject) {
-                    return {
-                        ...this.getDefaultParams(),
-                        ...this.getDurationParams()
-                    };
-                }
-
                 return {
                     ...this.getDefaultParams(),
-                    ...this.getCoinParams(),
-                    ...this.getWalletParams(),
                     ...this.getDurationParams()
                 };
             },
@@ -308,23 +355,11 @@
                 return {
                     name: this.input.name,
                     handle: this.input.handle,
-                    is_coin_project: this.input.isCoinProject,
+                    pitch_deck_url: this.input.pitchDeckUrl || null,
+                    goal_amount: this.input.goalAmount ? parseFloat(this.input.goalAmount) : null,
+                    x_profile_url: this.input.xProfileUrl || null,
+                    website_url: this.input.websiteUrl || null,
                     description: this.input.description
-                };
-            },
-
-            getCoinParams() {
-                return {
-                    // remove dollar from start of string
-                    coin_ticker: this.input.coinTicker.replace(/^\$/, ""),
-                    allocation_type: this.input.allocationType,
-                    total_allocated_quantity: this.input.totalAllocatedQuantity
-                };
-            },
-
-            getWalletParams() {
-                return {
-                    wallet_address: this.input.walletAddress
                 };
             },
 

@@ -4,14 +4,14 @@
             <div role="tablist" class="tabs-boxed tabs">
                 <a
                     role="tab"
-                    class="tab tab-sm"
+                    class="tab-sm tab"
                     :class="{ 'tab-active': projectStatus === 'active' }"
                     @click="setProjectType('active')">
                     Active
                 </a>
                 <a
                     role="tab"
-                    class="tab tab-sm"
+                    class="tab-sm tab"
                     :class="{ 'tab-active': projectStatus === 'ended' }"
                     @click="setProjectType('ended')">
                     Ended
@@ -39,23 +39,24 @@
                     <div>No results</div>
                 </div>
             </div>
-            <div v-if="!pagination.ended" class="my-4 flex justify-center">
+            <div v-if="projectsListStore.hasMoreResults" class="my-4 flex justify-center">
                 <div v-if="projectsListStore.isLoading" class="loading loading-dots loading-xs" />
-
                 <button v-else class="btn btn-outline btn-xs text-opacity-25" @click="handlePagination">
                     Load more...
                 </button>
             </div>
+            <div v-else-if="projectsListStore.projects.length > 0" class="my-4 flex justify-center">
+                <div class="text-sm opacity-50">End of results</div>
+            </div>
         </div>
     </div>
 </template>
-<script lang="ts">
+<script>
     import { useProjectsListStore } from "~/stores/projects/projectsListStore";
-    import ProjectsListItem from "~/modules/sendsol/components/projects/list/ProjectsListItem.vue";
 
     export default {
         name: "ProjectsList",
-        components: { ProjectsListItem },
+
         setup() {
             return {
                 projectsListStore: useProjectsListStore()
@@ -104,7 +105,7 @@
                 this.fetchProjects();
             },
 
-            setProjectType(status: string) {
+            setProjectType(status) {
                 this.projectStatus = status;
                 this.pagination.page = 0;
                 this.state.loading = true;

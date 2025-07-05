@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { useSupabaseClient } from "#imports";
-import Transactions from "~/resources/supabase/Transactions.js";
 
 export const useProjectStore = defineStore("project", {
     state: () => ({
@@ -22,14 +21,12 @@ export const useProjectStore = defineStore("project", {
             return !this.project;
         },
         walletAddress() {
-            return this.project.wallet_address;
-        },
-        testProjectReceiverAddress() {
-            return "CAg9fdpsthqunB1kpzAvSe3HmYRvrbKqMyZjycxbeYBn";
-        }
+            // Get default from env
+            const config = useRuntimeConfig();  
+            return this.project?.creator_wallet || config.app.defaultCreatorWallet;
+        
     },
     actions: {
-        // Refactor below two methods to use BaseModel and streamline error handling
         async createProject(projectParams) {
             this.state.loading = true;
             const { data, error } = await this.supabase.from("projects").insert(projectParams).select();
@@ -48,35 +45,82 @@ export const useProjectStore = defineStore("project", {
 
         async fetchProject(projectHandle) {
             this.state.loading = true;
-            const { data, error } = await this.supabase.from("projects").select().eq("handle", projectHandle);
 
-            if (error) {
+            try {
+                // First get the project details
+                const { data: project, error: projectError } = await this.supabase
+                    .from("projects")
+                    .select(
+                        `
+                        *,
+                        user_profiles!user_id (
+                            avatar_url,
+                            avatar_url_original,
+                            verified,
+                            username,
+                            name,
+                            x_profile_url
+                        )
+                    `
+                    )
+                    .eq("handle", projectHandle)
+                    .single();
+
+                if (projectError) throw projectError;
+
+                // Get all project transaction stats
+                let allTransactions = [];
+                let hasMore = true;
+                const limit = 100; // Reasonable chunk size
+                let offset = 0;
+
+                while (hasMore) {
+                    const { data: transactions, error: statsError } = await this.supabase.rpc(
+                        "get_project_transactions_stats",
+                        {
+                            project_txn_stats_project_id: project.id,
+                            project_txn_stats_offset: offset,
+                            project_txn_stats_limit: limit
+                        }
+                    );
+
+                    if (statsError) throw statsError;
+
+                    if (!transactions || transactions.length === 0) {
+                        hasMore = false;
+                    } else {
+                        allTransactions = [...allTransactions, ...transactions];
+                        offset += transactions.length;
+                        hasMore = transactions.length === limit;
+                    }
+                }
+
+                // Calculate totals from all stats
+                const totalRaised = allTransactions.reduce((sum, tx) => sum + (tx.total_amount || 0), 0);
+                const uniqueSenders = allTransactions.length;
+
+                // Process the data
+                this.project = {
+                    ...project,
+                    total_raised: totalRaised, // This is in lamports
+                    total_senders: uniqueSenders,
+                    avatar_url: project.user_profiles?.avatar_url,
+                    avatar_url_original: project.user_profiles?.avatar_url_original,
+                    username: project.user_profiles?.username,
+                    end_date: project.created_at
+                        ? new Date(project.created_at).setDate(
+                            new Date(project.created_at).getDate() + project.duration
+                        )
+                        : null
+                };
+            } catch (error) {
                 this.state.error = error;
+                this.project = null;
+            } finally {
                 this.state.loading = false;
-                return;
             }
 
-            const [project] = data;
-            this.project = project;
-            this.state.loading = false;
-            return project;
-        },
-
-        sendSolToProjectTransaction(params) {
-            const record = {
-                project_id: this.project.id,
-                ...params
-            };
-
-            return new Transactions().create(record);
-        },
-
-        updateTransactionStatus(transactionId, status) {
-            return new Transactions().updateTransactionStatus(transactionId, status);
-        },
-
-        fetchAmountSentByUser(senderWalletAddress) {
-            return new Transactions().fetchSentAmount(senderWalletAddress, this.testProjectReceiverAddress);
+            return this.project;
         }
     }
 });
