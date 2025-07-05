@@ -24,7 +24,7 @@ export const useProjectStore = defineStore("project", {
             // Get default from env
             const config = useRuntimeConfig();  
             return this.project?.creator_wallet || config.app.defaultCreatorWallet;
-        
+        }
     },
     actions: {
         async createProject(projectParams) {
