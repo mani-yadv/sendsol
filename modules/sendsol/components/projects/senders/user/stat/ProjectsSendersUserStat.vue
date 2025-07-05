@@ -126,7 +126,7 @@
                         .reduce((total, tx) => total + parseFloat(tx.amount), 0)
                         .toFixed(5);
                 } catch (error) {
-                    console.error("Error fetching transactions:", error);
+                    // Error handled silently
                 }
             },
             async handleTransactionSuccess() {

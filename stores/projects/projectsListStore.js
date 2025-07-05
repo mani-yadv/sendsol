@@ -96,7 +96,6 @@ export const useProjectsListStore = defineStore("projectsList", {
                 this.projects = [...this.projects, ...processedProjects];
                 this.state.error = false;
             } catch (error) {
-                console.error("Error fetching projects:", error);
                 this.state.error = true;
                 this.projects = [];
             } finally {

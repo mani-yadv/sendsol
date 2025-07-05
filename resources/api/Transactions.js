@@ -10,7 +10,6 @@ export default class ApiTransactions {
             const { data } = await axios.post(`${this.baseURL}/post`, transactionData);
             return { data };
         } catch (error) {
-            console.error("Error creating transaction:", error);
             return {
                 error: {
                     message: error.response?.data?.message || error.message,
@@ -27,7 +26,6 @@ export default class ApiTransactions {
             });
             return { data };
         } catch (error) {
-            console.error("Error updating transaction:", error);
             return {
                 error: {
                     message: error.response?.data?.message || error.message,
@@ -48,7 +46,6 @@ export default class ApiTransactions {
             });
             return { data };
         } catch (error) {
-            console.error("Error fetching transactions:", error);
             return {
                 error: {
                     message: error.response?.data?.message || error.message,

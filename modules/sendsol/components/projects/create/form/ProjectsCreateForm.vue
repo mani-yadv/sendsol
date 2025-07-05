@@ -338,7 +338,6 @@
                         window.location.href = `/${this.projectStore.project.handle}`;
                     }
                 } catch (error) {
-                    console.error("Form submission error:", error);
                     this.state.error = true;
                     this.state.loading = false;
                 }

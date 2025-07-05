@@ -191,7 +191,6 @@
                     const balance = await connection.getBalance(publicKey);
                     this.solBalance = parseFloat((balance / LAMPORTS_PER_SOL).toFixed(5));
                 } catch (error) {
-                    console.error("Error fetching balance:", error);
                     this.error = "Failed to fetch balance";
                 }
             },
@@ -206,7 +205,6 @@
                 );
 
                 if (error) {
-                    console.error("Error fetching sent amount:", error);
                     return 0;
                 }
 
@@ -287,7 +285,6 @@
                     this.pollAttempts++;
                     this.pollTimer = setTimeout(() => this.pollTransactionStatus(), POLL_INTERVAL);
                 } catch (error) {
-                    console.error("Error polling status:", error);
                     this.error = error.message || "Failed to verify transaction";
                     this.isLoading = false;
                 }
@@ -374,11 +371,6 @@
                     this.status = "verifying";
                     this.pollTransactionStatus();
                 } catch (error) {
-                    console.error("Transaction error:", error);
-                    // Get detailed error logs if available
-                    if (error.logs) {
-                        console.error("Transaction logs:", error.logs);
-                    }
                     this.error = error.message;
                     this.isLoading = false;
                 }

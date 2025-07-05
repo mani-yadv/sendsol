@@ -122,7 +122,6 @@
                         const solAmount = newAmount / 1e9; // Convert lamports to SOL
                         this.usdcAmount = (solAmount * solPrice).toFixed(4);
                     } catch (error) {
-                        console.error("Error fetching SOL price:", error);
                         this.usdcAmount = "";
                     }
                 }

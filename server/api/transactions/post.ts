@@ -172,7 +172,6 @@ export default defineEventHandler(async (event) => {
             .single();
 
         if (createError) {
-            console.error("Create error:", createError);
             return {
                 statusCode: 500,
                 error: "Failed to create transaction"
@@ -197,7 +196,6 @@ export default defineEventHandler(async (event) => {
             }
         };
     } catch (error) {
-        console.error("Transaction creation error:", error);
         return {
             statusCode: error.statusCode || 500,
             error: error.message || "Internal server error"

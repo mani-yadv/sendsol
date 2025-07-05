@@ -64,7 +64,6 @@ export const useProjectsListFeaturedStore = defineStore("projectsListFeatured", 
 
                 this.state.loading = false;
 
-                console.log(this.projects);
                 return this.projects;
             } catch (error) {
                 console.error("Error fetching featured projects:", error);

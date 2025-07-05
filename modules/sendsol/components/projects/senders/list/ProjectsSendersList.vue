@@ -92,7 +92,7 @@
                     if (error) throw error;
                     this.totalSenders = data || 0;
                 } catch (error) {
-                    console.error("Error fetching total senders:", error);
+                    // Error handled silently
                 }
             },
 
@@ -133,7 +133,7 @@
                         this.pagination.ended = transactions.length < this.pagination.limit;
                     }
                 } catch (error) {
-                    console.error("Error fetching transactions:", error);
+                    // Error handled silently
                 } finally {
                     this.state.loading = false;
                     this.state.loadingMore = false;
