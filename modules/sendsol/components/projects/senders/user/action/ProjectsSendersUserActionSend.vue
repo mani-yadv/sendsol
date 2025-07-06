@@ -98,7 +98,7 @@
 </template>
 <script>
     import { vAutoAnimate } from "@formkit/auto-animate/vue";
-    import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } from "@solana/web3.js";
+    import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL, ComputeBudgetProgram } from "@solana/web3.js";
     import { useProjectStore } from "~/stores/project/projectStore";
     import { useTransactionsStore } from "~/stores/transactions/transactionsStore";
     import { useUserWalletStore } from "~/stores/user/userWallet";
@@ -192,9 +192,9 @@
                         throw new Error("Invalid wallet public key");
                     }
 
-                    const connection = new Connection(RPC_ENDPOINT, "confirmed");
+                    const connection = new Connection(RPC_ENDPOINT, "finalized");
                     const publicKey = new PublicKey(publicKeyStr);
-                    const balance = await connection.getBalance(publicKey);
+                    const balance = await connection.getBalance(publicKey, "finalized");
                     this.solBalance = parseFloat((balance / LAMPORTS_PER_SOL).toFixed(5));
                 } catch (error) {
                     this.error = "Failed to fetch balance";
@@ -321,7 +321,7 @@
 
                     const userWallet = this.userWalletStore.instance;
                     const connection = new Connection(RPC_ENDPOINT, {
-                        commitment: "confirmed",
+                        commitment: "finalized",
                         confirmTransactionInitialTimeout: 60000 // 60 seconds
                     });
                     
@@ -339,8 +339,14 @@
                     const senderAddress = new PublicKey(senderKeyStr);
                     const receiverAddress = new PublicKey(receiverKeyStr);
 
-                    // Create transaction
+                    // Create transaction with compute unit price
                     const transaction = new Transaction().add(
+                        ComputeBudgetProgram.setComputeUnitPrice({
+                            microLamports: 10000 // 0.01 SOL per compute unit
+                        }),
+                        ComputeBudgetProgram.setComputeUnitLimit({
+                            units: 200000 // Sufficient compute units for transfer
+                        }),
                         SystemProgram.transfer({
                             fromPubkey: senderAddress,
                             toPubkey: receiverAddress,
@@ -362,8 +368,8 @@
                     this.status = "sending";
                     const signature = await connection.sendRawTransaction(signedTransaction.serialize(), {
                         skipPreflight: false,
-                        preflightCommitment: "confirmed",
-                        maxRetries: 5
+                        preflightCommitment: "processed",
+                        maxRetries: 3
                     });
 
                     // Wait for confirmation before proceeding
@@ -372,7 +378,7 @@
                         signature,
                         blockhash,
                         lastValidBlockHeight
-                    });
+                    }, "finalized");
 
                     if (confirmation.value.err) {
                         throw new Error("Transaction failed on chain");
