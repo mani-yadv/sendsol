@@ -27,7 +27,7 @@
 
             <div
                 class="m-3 flex cursor-pointer flex-col items-center justify-center space-y-2"
-                @click="state.actionSend = true">
+                @click="handleSendClick">
                 <div class="text-xl font-bold text-primary">Send SOL</div>
             </div>
         </div>
@@ -44,6 +44,7 @@
     import { useWallet } from "solana-wallets-vue";
     import { useProjectStore } from "~/stores/project/projectStore";
     import { useTransactionsStore } from "~/stores/transactions/transactionsStore";
+    import { useUserWalletStore } from "~/stores/user/userWallet";
 
     export default defineComponent({
         name: "ProjectsSendersUserStat",
@@ -92,12 +93,22 @@
                         this.totalSolSent = "0.00";
                     }
                 }
+            },
+            // Watch for transaction completion to refresh data
+            "userWalletStore.transactionCompleted": {
+                async handler(completed) {
+                    if (completed) {
+                        await this.fetchTransactions();
+                        this.$emit("refresh:senders");
+                    }
+                }
             }
         },
         mounted() {
             const { connected, publicKey } = useWallet();
             this.wallet.connected = connected;
             this.wallet.instance = publicKey;
+            this.userWalletStore = useUserWalletStore();
             if (this.wallet.connected) {
                 this.fetchTransactions();
             }
@@ -132,6 +143,14 @@
             async handleTransactionSuccess() {
                 await this.fetchTransactions();
                 this.$emit("refresh:senders");
+            },
+            
+            async handleSendClick() {
+                // For mobile wallet issues, try to force reconnect if wallet seems disconnected
+                if (!this.wallet.connected && this.userWalletStore) {
+                    await this.userWalletStore.forceReconnect();
+                }
+                this.state.actionSend = true;
             }
         }
     });

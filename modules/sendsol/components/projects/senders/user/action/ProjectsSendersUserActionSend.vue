@@ -1,6 +1,6 @@
 <template>
     <div>
-        <BottomDrawer :disabled="isLoading" @close="handleClose">
+        <BottomDrawer :can-close="!isLoading" @close="handleClose">
             <template #header>
                 <div class="text-xl font-bold">Send SOL to this project</div>
             </template>
@@ -24,10 +24,10 @@
                     </div>
 
                     <div v-if="error" class="alert-soft alert alert-error">
-                        <div class="flex w-full justify-between gap-1.5">
+                        <div class="flex w-full items-start gap-1.5">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="size-6 shrink-0 stroke-current"
+                                class="size-5 shrink-0 stroke-current mt-0.5"
                                 fill="none"
                                 viewBox="0 0 24 24">
                                 <path
@@ -36,7 +36,7 @@
                                     stroke-width="2"
                                     d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span>{{ error }}</span>
+                            <span class="text-sm leading-tight">{{ error }}</span>
                         </div>
                     </div>
 
@@ -291,6 +291,16 @@
                     if (data.status === "confirmed") {
                         this.transactionSuccess = true;
                         this.isLoading = false;
+                        
+                        // Emit events for data refresh
+                        this.$emit("success:transaction", {
+                            transactionId: this.lastTransactionSignature,
+                            amount: this.amountToSend
+                        });
+                        
+                        // Update wallet store state
+                        this.userWalletStore.setTransactionCompleted(this.lastTransactionSignature);
+                        
                         await this.fetchSolBalance();
                         setTimeout(() => this.handleClose(), 2000);
                         return;
@@ -399,10 +409,16 @@
                     if (createError) throw new Error("Failed to create transaction record");
 
                     // Emit event for successful transaction
-                    this.$emit("success:transaction");
+                    this.$emit("success:transaction", {
+                        transactionId: signature,
+                        amount: this.amountToSend
+                    });
 
-                    // Reset form
-                    this.amountToSend = "";
+                    // Update wallet store state
+                    this.userWalletStore.setTransactionCompleted(signature);
+
+                    // Don't reset form - preserve amount
+                    // this.amountToSend = "";
 
                     // Start polling for status
                     this.status = "verifying";

@@ -3,7 +3,9 @@ import { useWallet } from "solana-wallets-vue";
 
 export const useUserWalletStore = defineStore("userWallet", {
     state: () => ({
-        wallet: useWallet()
+        wallet: useWallet(),
+        transactionCompleted: false,
+        lastTransactionId: null
     }),
     getters: {
         isConnected() {
@@ -15,6 +17,30 @@ export const useUserWalletStore = defineStore("userWallet", {
         },
         instance() {
             return this.wallet;
+        }
+    },
+    actions: {
+        setTransactionCompleted(transactionId) {
+            this.transactionCompleted = true;
+            this.lastTransactionId = transactionId;
+            // Auto-reset after 1 second to allow components to react
+            setTimeout(() => {
+                this.transactionCompleted = false;
+            }, 1000);
+        },
+        
+        // Force wallet reconnection for mobile issues
+        async forceReconnect() {
+            try {
+                if (this.wallet.connected) {
+                    await this.wallet.disconnect();
+                }
+                // Small delay to ensure clean disconnect
+                await new Promise(resolve => setTimeout(resolve, 100));
+                await this.wallet.connect();
+            } catch (error) {
+                console.error('Force reconnect failed:', error);
+            }
         }
     }
 });
