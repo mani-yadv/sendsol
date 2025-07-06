@@ -186,8 +186,14 @@
                     const userWallet = this.userWalletStore.instance;
                     if (!userWallet?.publicKey) return;
 
+                    // Validate wallet public key before creating PublicKey
+                    const publicKeyStr = userWallet.publicKey.toString();
+                    if (!publicKeyStr || publicKeyStr.length !== 44) {
+                        throw new Error("Invalid wallet public key");
+                    }
+
                     const connection = new Connection(RPC_ENDPOINT, "confirmed");
-                    const publicKey = new PublicKey(userWallet.publicKey);
+                    const publicKey = new PublicKey(publicKeyStr);
                     const balance = await connection.getBalance(publicKey);
                     this.solBalance = parseFloat((balance / LAMPORTS_PER_SOL).toFixed(5));
                 } catch (error) {
@@ -244,10 +250,23 @@
                 if (this.amountToSend > this.solBalance) {
                     throw new Error("Insufficient balance");
                 }
-                // TODO: Enable this on prod
-                // if (!this.projectStore.walletAddress) {
-                //     throw new Error("Invalid wallet for project");
-                // }
+                
+                // Validate wallet addresses
+                const userWallet = this.userWalletStore.instance;
+                if (!userWallet?.publicKey) {
+                    throw new Error("User wallet not connected");
+                }
+                
+                // Check if project wallet address exists  
+                const projectWalletAddress = this.projectStore.walletAddress;
+                if (!projectWalletAddress) {
+                    throw new Error("Project wallet address not configured");
+                }
+                
+                // In production, ensure we're using the project's actual wallet, not default
+                if (!this.projectStore.project?.wallet_address) {
+                    throw new Error("Project wallet address not found");
+                }
             },
 
             async pollTransactionStatus() {
@@ -305,15 +324,27 @@
                         commitment: "confirmed",
                         confirmTransactionInitialTimeout: 60000 // 60 seconds
                     });
-                    const senderAddress = new PublicKey(userWallet.publicKey);
-                    const receiverAddress = new PublicKey(this.projectStore.walletAddress);
+                    
+                    // Validate and create PublicKey objects safely
+                    const senderKeyStr = userWallet.publicKey.toString();
+                    const receiverKeyStr = this.projectStore.walletAddress;
+                    
+                    if (!senderKeyStr || senderKeyStr.length !== 44) {
+                        throw new Error("Invalid sender wallet address");
+                    }
+                    if (!receiverKeyStr || receiverKeyStr.length !== 44) {
+                        throw new Error("Invalid receiver wallet address");
+                    }
+                    
+                    const senderAddress = new PublicKey(senderKeyStr);
+                    const receiverAddress = new PublicKey(receiverKeyStr);
 
                     // Create transaction
                     const transaction = new Transaction().add(
                         SystemProgram.transfer({
                             fromPubkey: senderAddress,
                             toPubkey: receiverAddress,
-                            lamports: this.amountToSend * LAMPORTS_PER_SOL
+                            lamports: Math.round(this.amountToSend * LAMPORTS_PER_SOL)
                         })
                     );
 

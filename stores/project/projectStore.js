@@ -23,7 +23,7 @@ export const useProjectStore = defineStore("project", {
         walletAddress() {
             // Get default from env
             const config = useRuntimeConfig();  
-            return this.project?.creator_wallet || config.app.defaultCreatorWallet;
+            return this.project?.wallet_address || config.public.defaultCreatorWallet;
         }
     },
     actions: {

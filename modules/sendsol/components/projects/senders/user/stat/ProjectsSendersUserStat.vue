@@ -12,7 +12,7 @@
                     <div class="stat-title font-bold text-primary-content">You sent</div>
                     <div class="stat-value flex items-center space-x-2">
                         <SVGSolanaOutline width="28" />
-                        <span v-if="!state.loading">{{ totalSolSent }}</span>
+                        <span class="text-3xl" v-if="!state.loading">{{ totalSolSent }}</span>
                     </div>
                 </div>
 
@@ -21,7 +21,7 @@
                     <div v-if="state.loading" class="stat-value text-right">
                         <div class="loading loading-dots loading-md" />
                     </div>
-                    <div v-else class="stat-value text-right">{{ totalStake }}%</div>
+                    <div v-else class="stat-value text-right text-3xl">{{ totalStake }}%</div>
                 </div>
             </div>
 
@@ -124,7 +124,7 @@
                     this.totalSolSent = (data || [])
                         .filter((tx) => tx.status === "confirmed")
                         .reduce((total, tx) => total + parseFloat(tx.amount), 0)
-                        .toFixed(5);
+                        .toFixed(4);
                 } catch (error) {
                     // Error handled silently
                 }

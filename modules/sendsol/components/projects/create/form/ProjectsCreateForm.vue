@@ -358,7 +358,8 @@
                     goal_amount: this.input.goalAmount ? parseFloat(this.input.goalAmount) : null,
                     x_profile_url: this.input.xProfileUrl || null,
                     website_url: this.input.websiteUrl || null,
-                    description: this.input.description
+                    description: this.input.description,
+                    wallet_address: this.input.walletAddress
                 };
             },
 
