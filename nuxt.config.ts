@@ -47,9 +47,8 @@ export default defineNuxtConfig({
         prerender: {
             routes: ["/"]
         },
-        bundledStorage: ['node_modules/jayson'],
-        rollupConfig: {
-            external: []
+        alias: {
+            'jayson/lib/client/browser': 'jayson/lib/client/browser/index.js'
         }
     },
 
