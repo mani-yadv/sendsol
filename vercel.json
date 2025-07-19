@@ -1,7 +1,1 @@
-{
-  "functions": {
-    "server/api/transactions/get.ts": {
-      "maxDuration": 30
-    }
-  }
-}
+{}
