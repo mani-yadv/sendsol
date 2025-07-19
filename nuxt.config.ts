@@ -46,11 +46,6 @@ export default defineNuxtConfig({
         },
         prerender: {
             routes: ["/"]
-        },
-        rollupConfig: {
-            external: (id) => {
-                return id.includes('jayson') || id.includes('node-gyp-build')
-            }
         }
     },
 
