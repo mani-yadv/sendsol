@@ -1,4 +1,4 @@
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { serverSupabaseClient } from "#supabase/server";
 
 const RPC_ENDPOINT =
@@ -6,40 +6,6 @@ const RPC_ENDPOINT =
 
 // Fields we want to return from database
 const SELECT_FIELDS = "transaction_id,sender_wallet,amount,status,created_at";
-
-// Helper function to make RPC calls without jayson dependency
-async function getTransactionInfo(transactionId: string) {
-    try {
-        const response = await fetch(RPC_ENDPOINT, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                jsonrpc: '2.0',
-                id: 1,
-                method: 'getTransaction',
-                params: [
-                    transactionId,
-                    {
-                        commitment: 'confirmed',
-                        maxSupportedTransactionVersion: 0
-                    }
-                ]
-            })
-        });
-
-        if (!response.ok) {
-            return null;
-        }
-
-        const data = await response.json();
-        return data.result;
-    } catch (error) {
-        console.error('RPC call failed:', error);
-        return null;
-    }
-}
 
 export default defineEventHandler(async (event) => {
     setResponseHeaders(event, {
@@ -91,7 +57,11 @@ export default defineEventHandler(async (event) => {
 
             // Update status if needed
             if (transaction.status === "pending") {
-                const txInfo = await getTransactionInfo(query.transaction_id as string);
+                const connection = new Connection(RPC_ENDPOINT, "confirmed");
+                const txInfo = await connection.getTransaction(query.transaction_id, {
+                    commitment: "confirmed",
+                    maxSupportedTransactionVersion: 0
+                });
 
                 let newStatus = transaction.status;
                 if (!txInfo) {
