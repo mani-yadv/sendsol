@@ -60,7 +60,7 @@
             return {
                 state: {
                     actionSend: false,
-                    loading: true
+                    loading: false
                 },
                 wallet: {
                     connected: false,
