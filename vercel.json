@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "server/api/transactions/get.ts": {
-      "maxDuration": 30
-    }
-  },
   "routes": [
     {
       "src": "/manifest\\.json",
