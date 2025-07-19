@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
                 appIdentity: {
                     name: "SendSol",
                     uri: window.location.origin, // Use current domain
-                    icon: "/icon-192x192.png"
+                    icon: "/logo.png"
                 },
                 chains: ["solana:mainnet", "solana:devnet", "solana:testnet"]
             });

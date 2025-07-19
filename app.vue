@@ -20,6 +20,11 @@
             useHead({
                 title: "SendSol",
                 meta: [{ name: "headline", content: "Crowdfund Solana projects" }],
+                link: [
+                    { rel: "icon", type: "image/png", href: "/logo.png" },
+                    { rel: "shortcut icon", type: "image/png", href: "/logo.png" },
+                    { rel: "apple-touch-icon", href: "/logo.png" }
+                ],
                 htmlAttrs: {
                     "data-theme": "forest"
                 }
