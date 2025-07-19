@@ -58,6 +58,9 @@ export default defineNuxtConfig({
                 target: "esnext"
             }
         },
+        serverAssets: {
+            baseName: 'server'
+        }
     },
 
     app: {
