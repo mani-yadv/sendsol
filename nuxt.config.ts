@@ -79,7 +79,7 @@ export default defineNuxtConfig({
         buildAssetsDir: "/_nuxt/",
         head: {
             link: [
-                { rel: "manifest", href: "/app-manifest.json" }
+                { rel: "manifest", href: "/public/manifest.json" }
             ]
         }
     },
