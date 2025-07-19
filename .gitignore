@@ -13,8 +13,6 @@
 dist
 coverage
 
-public/
-
 # Node dependencies
 node_modules
 

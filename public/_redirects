@@ -1,0 +1,9 @@
+# Static assets should be served directly
+/manifest.json /manifest.json 200
+/logo.png /logo.png 200  
+/icon-192x192.png /icon-192x192.png 200
+/icon-512x512.png /icon-512x512.png 200
+/icon.svg /icon.svg 200
+
+# All other routes go to index for SPA
+/* /index.html 200

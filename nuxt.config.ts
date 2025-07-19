@@ -118,8 +118,7 @@ export default defineNuxtConfig({
       "@formkit/auto-animate",
       "@nuxtjs/device",
       "@vee-validate/nuxt",
-      "nuxt-vitest",
-      "@nuxt/image"
+      "nuxt-vitest"
     ],
 
     supabase: {
