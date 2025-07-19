@@ -18,7 +18,20 @@ export default defineNuxtConfig({
             global: "globalThis"
         },
         optimizeDeps: {
-            include: ["@solana/web3.js", "buffer"]
+            include: ["@solana/web3.js", "buffer", "crypto-browserify", "stream-browserify"]
+        },
+        build: {
+            target: "esnext"
+        },
+        resolve: {
+            alias: {
+                crypto: "crypto-browserify",
+                stream: "stream-browserify",
+                http: "stream-http",
+                https: "https-browserify",
+                zlib: "browserify-zlib",
+                url: "url"
+            }
         }
     },
 
@@ -28,6 +41,9 @@ export default defineNuxtConfig({
         }
     },
 
+    routeRules: {
+        "/**": { ssr: false }
+    },
 
     runtimeConfig: {
         supabaseAccessToken: process.env.SUPABASE_ACCESS_TOKEN,
@@ -43,7 +59,6 @@ export default defineNuxtConfig({
             defaultCreatorWallet: process.env.NUXT_DEFAULT_CREATOR_WALLET
         }
     },
-
 
     components: [
         { path: "~/components" },
