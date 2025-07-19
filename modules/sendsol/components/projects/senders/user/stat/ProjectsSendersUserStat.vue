@@ -1,7 +1,16 @@
 <template>
     <div class="flex flex-col space-y-6">
-        <div class="w-full rounded-xl border border-neutral">
-            <WalletConnect />
+        <div class="flex w-full items-center gap-1.5">
+            <div class="grow">
+                <WalletConnect />
+            </div>
+            <button
+                v-if="wallet.connected"
+                class="btn btn-outline btn-error opacity-30 rounded-lg"
+                title="Reset wallet connection"
+                @click="handleResetWallet">
+                <PhosphorIconX :size="20" />
+            </button>
         </div>
 
         <div
@@ -115,6 +124,17 @@
             }
         },
         methods: {
+            async handleResetWallet() {
+                try {
+                    await this.userWalletStore.resetConnection();
+                    // Reset local state
+                    this.wallet.connected = false;
+                    this.wallet.address = "";
+                    this.totalSolSent = "0.00";
+                } catch (error) {
+                    console.error("Failed to reset wallet:", error);
+                }
+            },
             async fetchTransactions() {
                 try {
                     this.state.loading = true;

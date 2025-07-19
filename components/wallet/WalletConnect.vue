@@ -25,14 +25,14 @@
     }
 
     .swv-button {
-        @apply btn bg-transparent border border-neutral rounded-xl hover:bg-neutral w-full;
+        @apply btn bg-transparent border border-neutral rounded-lg hover:bg-neutral w-full;
     }
 
     .swv-button-trigger {
-        @apply btn bg-transparent border border-neutral outline-neutral rounded-xl hover:bg-neutral w-full;
+        @apply btn bg-transparent border border-neutral outline-neutral rounded-lg hover:bg-neutral w-full;
     }
 
     .swv-button:not([disabled]):hover {
-        @apply border-primary border border-primary bg-neutral;
+        @apply border-primary border border-primary bg-neutral rounded-lg;
     }
 </style>

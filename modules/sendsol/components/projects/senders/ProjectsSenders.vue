@@ -6,28 +6,28 @@
         <div class="my-2">
             <!-- Project Info -->
             <div class="card bg-base-200">
-                <div class="card-body">
-                    <h3 class="card-title text-sm">Project Details</h3>
-                    <p class="text-xs" v-text="formatDescription" />
+                <div class="card-body p-6">
+                    <h3 class="card-title text-base">Project Details</h3>
+                    <p class="text-sm leading-snug text-gray-400" v-html="formatDescription" />
 
                     <!-- Project Links -->
                     <div class="mt-4 flex gap-4">
                         <a v-if="project.website_url" :href="project.website_url" target="_blank">
                             <div class="flex items-center space-x-0.5">
-                                <PhosphorIconGlobe size="12" />
-                                <span class="text-xs">Website</span>
+                                <PhosphorIconGlobe size="14" />
+                                <span class="text-sm">Website</span>
                             </div>
                         </a>
                         <a v-if="project.pitch_deck_url" :href="project.pitch_deck_url" target="_blank">
                             <div class="flex items-center space-x-0.5">
-                                <PhosphorIconPresentation size="12" />
-                                <span class="text-xs">Pitch Deck</span>
+                                <PhosphorIconPresentation size="14" />
+                                <span class="text-sm">Pitch Deck</span>
                             </div>
                         </a>
                         <a v-if="project.x_profile_url" :href="project.x_profile_url" target="_blank">
                             <div class="flex items-center space-x-0.5">
-                                <PhosphorIconXLogo size="12" />
-                                <span class="text-xs">Profile</span>
+                                <PhosphorIconXLogo size="14" />
+                                <span class="text-sm">Profile</span>
                             </div>
                         </a>
                     </div>

@@ -39,7 +39,29 @@ export const useUserWalletStore = defineStore("userWallet", {
                 await new Promise((resolve) => setTimeout(resolve, 100));
                 await this.wallet.connect();
             } catch (error) {
-                // console.error("Force reconnect failed:", error);
+                console.error("Force reconnect failed:", error);
+            }
+        },
+
+        // Reset wallet connection completely
+        async resetConnection() {
+            try {
+                // Disconnect if connected
+                if (this.wallet.connected) {
+                    await this.wallet.disconnect();
+                }
+
+                // Clear any stored wallet preference
+                localStorage.removeItem("walletName");
+                localStorage.removeItem("solana-wallet-adapter-wallet-name");
+
+                // Reset transaction state
+                this.transactionCompleted = false;
+                this.lastTransactionId = null;
+
+                console.log("Wallet connection reset successfully");
+            } catch (error) {
+                console.error("Failed to reset wallet connection:", error);
             }
         }
     }
