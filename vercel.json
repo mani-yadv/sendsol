@@ -1,31 +1,27 @@
 {
-  "redirects": [
-    {
-      "source": "/www/(.*)",
-      "destination": "/$1",
-      "permanent": true
+  "functions": {
+    "server/api/transactions/get.ts": {
+      "maxDuration": 30
     }
-  ],
-  "rewrites": [
+  },
+  "routes": [
     {
-      "source": "/manifest.json",
-      "destination": "/manifest.json"
+      "src": "/manifest\\.json",
+      "dest": "/manifest.json",
+      "headers": {
+        "Content-Type": "application/json"
+      }
     },
     {
-      "source": "/logo.png", 
-      "destination": "/logo.png"
+      "src": "/(logo\\.png|icon-192x192\\.png|icon-512x512\\.png|icon\\.svg)",
+      "dest": "/$1",
+      "headers": {
+        "Content-Type": "image/png"
+      }
     },
     {
-      "source": "/icon-192x192.png",
-      "destination": "/icon-192x192.png"
-    },
-    {
-      "source": "/icon-512x512.png",
-      "destination": "/icon-512x512.png"
-    },
-    {
-      "source": "/icon.svg",
-      "destination": "/icon.svg"
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
