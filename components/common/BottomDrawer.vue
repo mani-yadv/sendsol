@@ -7,7 +7,7 @@
                 v-auto-animate
                 class="duration-1500 w-full translate-y-full bg-base-100 p-6 shadow-2xl transition-transform ease-in-out">
                 <!-- Close icon -->
-                <div class="mx-auto max-w-md">
+                <div class="mx-auto max-w-[520px] px-6">
                     <div class="flex justify-between">
                         <slot name="header" />
 
@@ -17,7 +17,7 @@
                     </div>
 
                     <!-- Drawer content goes here -->
-                    <div class="mt-14 pb-2">
+                    <div class="mt-6 pb-2">
                         <slot name="content" />
                     </div>
                 </div>

@@ -124,6 +124,34 @@ export const useTransactionsStore = defineStore("transactions", {
                 this.setLoading(false);
             }
         },
+        async getTotalSolSent() {
+            try {
+                this.setLoading(true);
+                this.clearError();
+
+                const { data } = await axios.get("/api/transactions/total", {
+                    headers: {
+                        Accept: "application/json"
+                    }
+                });
+
+                if (!data || !data.data) {
+                    throw new Error("Invalid response format");
+                }
+
+                return { data: data.data };
+            } catch (error) {
+                if (error.response && error.response.status >= 400 && error.response.status < 600) {
+                    const errorMessage = error.response.data?.message || error.message;
+                    this.setError(errorMessage);
+                } else {
+                    this.setError(error.message);
+                }
+                return { error };
+            } finally {
+                this.setLoading(false);
+            }
+        },
         async updateTransaction(transactionId, projectId) {
             try {
                 this.setLoading(true);

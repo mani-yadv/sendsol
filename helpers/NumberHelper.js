@@ -20,6 +20,11 @@ export default class NumberHelper {
         return num;
     }
 
+    static format(num, decimals = 2) {
+        if (num == null || isNaN(num)) return "0";
+        return Number(num).toFixed(decimals);
+    }
+
     static formatSol(lamports) {
         if (!lamports) return "0 SOL";
 
