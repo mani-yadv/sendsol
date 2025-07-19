@@ -1,8 +1,8 @@
 <template>
     <div class="logo flex items-center space-x-2">
         <NuxtLink href="/" class="flex items-center space-x-2">
-            <img src="/logo.png" alt="SendSol Logo" class="size-7 rounded-lg" />
-            <span class="mb-0.5 text-2xl font-medium">SENDSOL</span>
+            <img v-if="false" src="/logo.png" alt="SendSol Logo" class="size-7 rounded-lg" />
+            <span class="mb-0.5 text-3xl font-medium">SENDSOL</span>
         </NuxtLink>
     </div>
 </template>
