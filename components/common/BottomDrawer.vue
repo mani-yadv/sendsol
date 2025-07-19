@@ -5,9 +5,9 @@
             <div
                 ref="drawer"
                 v-auto-animate
-                class="duration-1500 w-full translate-y-full bg-base-100 p-6 shadow-2xl transition-transform ease-in-out">
+                class="duration-1500 w-full translate-y-full bg-base-100 px-2 py-6 shadow-2xl transition-transform ease-in-out">
                 <!-- Close icon -->
-                <div class="mx-auto max-w-[520px] px-6">
+                <div class="mx-auto max-w-[520px] px-4">
                     <div class="flex justify-between">
                         <slot name="header" />
 

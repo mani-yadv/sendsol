@@ -10,10 +10,7 @@ export default defineEventHandler(async (event) => {
         const supabase = await serverSupabaseClient(event);
 
         // Get total amount sent across all confirmed transactions
-        const { data, error } = await supabase
-            .from("transactions")
-            .select("amount")
-            .eq("status", "confirmed");
+        const { data, error } = await supabase.from("transactions").select("amount").eq("status", "confirmed");
 
         if (error) {
             throw createError({
@@ -26,7 +23,7 @@ export default defineEventHandler(async (event) => {
         const totalLamports = data?.reduce((sum, tx) => sum + parseFloat(tx.amount), 0) || 0;
         const totalSol = totalLamports / LAMPORTS_PER_SOL;
 
-        return { 
+        return {
             data: {
                 total_sol: totalSol,
                 total_lamports: totalLamports,

@@ -6,7 +6,7 @@
             </div>
             <button
                 v-if="wallet.connected"
-                class="btn btn-outline btn-error opacity-30 rounded-lg"
+                class="btn btn-outline btn-error rounded-lg opacity-30"
                 title="Reset wallet connection"
                 @click="handleResetWallet">
                 <PhosphorIconX :size="20" />
