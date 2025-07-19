@@ -49,14 +49,23 @@ export default defineNuxtConfig({
                 driver: "fs",
                 base: "./.nuxt/builds"
             }
+        },
+        prerender: {
+            routes: ["/"]
         }
     },
 
     app: {
-        buildAssetsDir: "/_nuxt/"
+        buildAssetsDir: "/_nuxt/",
+        head: {
+            link: [
+                { rel: "manifest", href: "/manifest.json" }
+            ]
+        }
     },
 
     routeRules: {
+        "/manifest.json": { prerender: true },
         "/**": { ssr: false }
     },
 
