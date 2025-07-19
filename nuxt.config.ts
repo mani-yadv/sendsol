@@ -44,19 +44,8 @@ export default defineNuxtConfig({
         experimental: {
             wasm: true
         },
-        storage: {
-            builds: {
-                driver: "fs",
-                base: "./.nuxt/builds"
-            }
-        },
         prerender: {
             routes: ["/"]
-        },
-        esbuild: {
-            options: {
-                target: "esnext"
-            }
         },
         rollupConfig: {
             external: (id) => {
