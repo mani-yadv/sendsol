@@ -46,6 +46,10 @@ export default defineNuxtConfig({
         },
         prerender: {
             routes: ["/"]
+        },
+        bundledStorage: ['node_modules/jayson'],
+        rollupConfig: {
+            external: []
         }
     },
 
