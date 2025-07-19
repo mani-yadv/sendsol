@@ -57,14 +57,8 @@ export default defineNuxtConfig({
             }
         },
         prerender: {
-            routes: ["/", "/manifest.json"]
+            routes: ["/"]
         },
-        publicAssets: [
-            {
-                baseURL: "/",
-                dir: "public"
-            }
-        ],
         esbuild: {
             options: {
                 target: "esnext"
@@ -85,11 +79,6 @@ export default defineNuxtConfig({
     },
 
     routeRules: {
-        "/manifest.json": { prerender: true, headers: { "Content-Type": "application/json" } },
-        "/logo.png": { prerender: true, headers: { "Content-Type": "image/png" } },
-        "/icon-192x192.png": { prerender: true, headers: { "Content-Type": "image/png" } },
-        "/icon-512x512.png": { prerender: true, headers: { "Content-Type": "image/png" } },
-        "/icon.svg": { prerender: true, headers: { "Content-Type": "image/svg+xml" } },
         "/**": { ssr: false }
     },
 
