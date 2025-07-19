@@ -1,8 +1,31 @@
 {
-  "routes": [
+  "redirects": [
     {
-      "src": "/(manifest\\.json|logo\\.png|icon-192x192\\.png|icon-512x512\\.png|icon\\.svg)",
-      "dest": "/$1"
+      "source": "/www/(.*)",
+      "destination": "/$1",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/manifest.json",
+      "destination": "/manifest.json"
+    },
+    {
+      "source": "/logo.png", 
+      "destination": "/logo.png"
+    },
+    {
+      "source": "/icon-192x192.png",
+      "destination": "/icon-192x192.png"
+    },
+    {
+      "source": "/icon-512x512.png",
+      "destination": "/icon-512x512.png"
+    },
+    {
+      "source": "/icon.svg",
+      "destination": "/icon.svg"
     }
   ]
 }
