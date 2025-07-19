@@ -7,35 +7,17 @@
             <template #content>
                 <div class="mt-4 flex h-full flex-col justify-end space-y-12">
                     <div v-if="transactionSuccess" class="alert alert-success shadow-lg">
-                        <div class="flex items-center gap-1.5">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="size-6 shrink-0 stroke-current"
-                                fill="none"
-                                viewBox="0 0 24 24">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>Transaction successful! Amount sent: {{ amountToSend }} SOL</span>
+                        <div class="flex items-center gap-0.5">
+                            <PhosphorIconCheckCircle size="20" />
+                            <span class="text-sm leading-tight">
+                                Transaction successful! Amount sent: {{ amountToSend }} SOL
+                            </span>
                         </div>
                     </div>
 
                     <div v-if="error" class="alert-soft alert alert-error">
-                        <div class="flex w-full items-start gap-1.5">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="size-5 shrink-0 stroke-current mt-0.5"
-                                fill="none"
-                                viewBox="0 0 24 24">
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                        <div class="flex w-full items-start gap-0.5">
+                            <PhosphorIconXCircle size="20" />
                             <span class="text-sm leading-tight">{{ error }}</span>
                         </div>
                     </div>
@@ -98,7 +80,14 @@
 </template>
 <script>
     import { vAutoAnimate } from "@formkit/auto-animate/vue";
-    import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL, ComputeBudgetProgram } from "@solana/web3.js";
+    import {
+        Connection,
+        PublicKey,
+        Transaction,
+        SystemProgram,
+        LAMPORTS_PER_SOL,
+        ComputeBudgetProgram
+    } from "@solana/web3.js";
     import { useProjectStore } from "~/stores/project/projectStore";
     import { useTransactionsStore } from "~/stores/transactions/transactionsStore";
     import { useUserWalletStore } from "~/stores/user/userWallet";
@@ -250,19 +239,19 @@
                 if (this.amountToSend > this.solBalance) {
                     throw new Error("Insufficient balance");
                 }
-                
+
                 // Validate wallet addresses
                 const userWallet = this.userWalletStore.instance;
                 if (!userWallet?.publicKey) {
                     throw new Error("User wallet not connected");
                 }
-                
-                // Check if project wallet address exists  
+
+                // Check if project wallet address exists
                 const projectWalletAddress = this.projectStore.walletAddress;
                 if (!projectWalletAddress) {
                     throw new Error("Project wallet address not configured");
                 }
-                
+
                 // In production, ensure we're using the project's actual wallet, not default
                 if (!this.projectStore.project?.wallet_address) {
                     throw new Error("Project wallet address not found");
@@ -291,16 +280,16 @@
                     if (data.status === "confirmed") {
                         this.transactionSuccess = true;
                         this.isLoading = false;
-                        
+
                         // Emit events for data refresh
                         this.$emit("success:transaction", {
                             transactionId: this.lastTransactionSignature,
                             amount: this.amountToSend
                         });
-                        
+
                         // Update wallet store state
                         this.userWalletStore.setTransactionCompleted(this.lastTransactionSignature);
-                        
+
                         await this.fetchSolBalance();
                         setTimeout(() => this.handleClose(), 2000);
                         return;
@@ -334,18 +323,18 @@
                         commitment: "finalized",
                         confirmTransactionInitialTimeout: 60000 // 60 seconds
                     });
-                    
+
                     // Validate and create PublicKey objects safely
                     const senderKeyStr = userWallet.publicKey.toString();
                     const receiverKeyStr = this.projectStore.walletAddress;
-                    
+
                     if (!senderKeyStr || senderKeyStr.length !== 44) {
                         throw new Error("Invalid sender wallet address");
                     }
                     if (!receiverKeyStr || receiverKeyStr.length !== 44) {
                         throw new Error("Invalid receiver wallet address");
                     }
-                    
+
                     const senderAddress = new PublicKey(senderKeyStr);
                     const receiverAddress = new PublicKey(receiverKeyStr);
 
@@ -384,11 +373,14 @@
 
                     // Wait for confirmation before proceeding
                     this.status = "confirming";
-                    const confirmation = await connection.confirmTransaction({
-                        signature,
-                        blockhash,
-                        lastValidBlockHeight
-                    }, "finalized");
+                    const confirmation = await connection.confirmTransaction(
+                        {
+                            signature,
+                            blockhash,
+                            lastValidBlockHeight
+                        },
+                        "finalized"
+                    );
 
                     if (confirmation.value.err) {
                         throw new Error("Transaction failed on chain");

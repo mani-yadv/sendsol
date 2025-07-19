@@ -100,7 +100,7 @@ export default class Transactions extends BaseModel {
      *
      * @async
      * @param {string} transactionId - The ID of the transaction to be checked
-     * @returns {Promise<object>} An object containing a boolean indicating whether the transaction exists and any error that occurred
+     * @returns {Promise<object>} An object containing a boolean indicating whether the transaction exists and any error
      */
     async checkTransactionExists(transactionId) {
         const { data, error } = await this.supabase

@@ -22,7 +22,7 @@ export const useProjectStore = defineStore("project", {
         },
         walletAddress() {
             // Get default from env
-            const config = useRuntimeConfig();  
+            const config = useRuntimeConfig();
             return this.project?.wallet_address || config.public.defaultCreatorWallet;
         }
     },
@@ -109,8 +109,8 @@ export const useProjectStore = defineStore("project", {
                     username: project.user_profiles?.username,
                     end_date: project.created_at
                         ? new Date(project.created_at).setDate(
-                            new Date(project.created_at).getDate() + project.duration
-                        )
+                              new Date(project.created_at).getDate() + project.duration
+                          )
                         : null
                 };
             } catch (error) {

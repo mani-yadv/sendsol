@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="fixed left-0 top-0 flex h-full w-screen flex-col justify-end overflow-y-hidden bg-base-300/75 z-50">
+        <div class="fixed left-0 top-0 z-50 flex h-full w-screen flex-col justify-end overflow-y-hidden bg-base-300/75">
             <!--Bottom drawer-->
             <div
                 ref="drawer"

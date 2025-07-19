@@ -66,7 +66,7 @@ export const useProjectsListFeaturedStore = defineStore("projectsListFeatured", 
 
                 return this.projects;
             } catch (error) {
-                console.error("Error fetching featured projects:", error);
+                // console.error("Error fetching featured projects:", error);
                 this.state.error = true;
                 this.state.loading = false;
                 return [];
@@ -75,7 +75,7 @@ export const useProjectsListFeaturedStore = defineStore("projectsListFeatured", 
         reset() {
             this.projects = [];
         },
-        getProjectTotal(projectId) {
+        getProjectTotal(_projectId) {
             // This method is not used anymore, but it's kept for compatibility
             // If you want to remove it, you can do so
             return 0;

@@ -2,7 +2,6 @@
     <div>
         <!-- Form -->
         <VeeForm
-            v-slot="{ errors }"
             ref="form"
             :validation-schema="validationSchema"
             :validate-on-mount="false"
@@ -183,7 +182,7 @@
 <script>
     import { useWallet } from "solana-wallets-vue";
     import { defineComponent } from "vue";
-    import { debounce } from "lodash";
+    import debounce from "lodash/debounce";
     import createSchema from "./validation/schema";
     import { useUserStore } from "~/stores/user/userStore";
     import { useProjectStore } from "~/stores/project/projectStore";
@@ -263,7 +262,7 @@
         },
 
         methods: {
-            handleHandleInput: debounce(async function () {
+            handleHandleInput: debounce(async function handleHandleInputFn() {
                 const handle = this.input.handle;
 
                 // Reset error
@@ -293,7 +292,7 @@
 
             scrollToError() {
                 // Try to find either custom handle error or VeeValidate error
-                const errorElement = document.querySelector('[class*="text-error"]'); // Will match any class containing text-error
+                const errorElement = document.querySelector('[class*="text-error"]');
 
                 if (errorElement) {
                     // Find the closest input field to highlight

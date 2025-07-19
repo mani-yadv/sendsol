@@ -17,8 +17,8 @@ export default defineEventHandler(async (event) => {
         const supabase = await serverSupabaseClient(event);
 
         // Validate required fields
-        const { transaction_id, project_id } = body;
-        if (!transaction_id || !project_id) {
+        const { transaction_id: transactionId, project_id: projectId } = body;
+        if (!transactionId || !projectId) {
             throw createError({
                 statusCode: 400,
                 message: "Missing required fields"
@@ -29,8 +29,8 @@ export default defineEventHandler(async (event) => {
         const { data: transaction, error: txError } = await supabase
             .from("transactions")
             .select(SELECT_FIELDS)
-            .eq("transaction_id", transaction_id)
-            .eq("project_id", project_id)
+            .eq("transaction_id", transactionId)
+            .eq("project_id", projectId)
             .single();
 
         if (txError) {
@@ -49,7 +49,7 @@ export default defineEventHandler(async (event) => {
 
         // Check transaction status on chain
         const connection = new Connection(RPC_ENDPOINT, "confirmed");
-        const txInfo = await connection.getTransaction(transaction_id, {
+        const txInfo = await connection.getTransaction(transactionId, {
             commitment: "confirmed",
             maxSupportedTransactionVersion: 0
         });
@@ -73,7 +73,7 @@ export default defineEventHandler(async (event) => {
                     status: newStatus,
                     updated_at: new Date().toISOString()
                 })
-                .eq("transaction_id", transaction_id)
+                .eq("transaction_id", transactionId)
                 .select(SELECT_FIELDS)
                 .single();
 

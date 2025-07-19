@@ -1,28 +1,6 @@
 import * as yup from "yup";
 
-// Debounce function to limit API calls
-const debounce = (func, wait) => {
-    let timeout;
-    return async (...args) => {
-        clearTimeout(timeout);
-        return new Promise((resolve) => {
-            timeout = setTimeout(async () => {
-                resolve(await func(...args));
-            }, wait);
-        });
-    };
-};
-
-// Debounced handle check
-const checkHandle = debounce(async (handle, supabase) => {
-    // Skip empty handles
-    if (!handle) return true;
-
-    const { data } = await supabase.from("projects").select("handle").eq("handle", handle).single();
-    return !data;
-}, 100); // 100ms delay
-
-const createSchema = (supabase) => {
+const createSchema = () => {
     return yup.object({
         name: yup.string().min(3, "Project name must be at least 3 characters").required("Project name is required"),
 

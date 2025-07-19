@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
         const supabase = await serverSupabaseClient(event);
 
         // Validate required parameters
-        const { project_id, sender_wallet, status } = query;
+        const { project_id: projectId, sender_wallet: senderWallet, status } = query;
 
         // If transaction_id is provided, get single transaction
         if (query.transaction_id) {
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
                 .eq("transaction_id", query.transaction_id)
                 .single();
 
-            if (project_id && projectCheck?.project_id !== project_id) {
+            if (projectId && projectCheck?.project_id !== projectId) {
                 throw createError({
                     statusCode: 403,
                     message: "Unauthorized access to transaction"
@@ -96,24 +96,24 @@ export default defineEventHandler(async (event) => {
         }
 
         // Get confirmed transactions for project and sender
-        if (!project_id) {
+        if (!projectId) {
             throw createError({
                 statusCode: 400,
                 message: "Missing required parameter: project_id"
             });
         }
 
-        const query_builder = supabase.from("transactions").select(SELECT_FIELDS).eq("project_id", project_id);
+        const queryBuilder = supabase.from("transactions").select(SELECT_FIELDS).eq("project_id", projectId);
 
         if (status) {
-            query_builder.eq("status", status);
+            queryBuilder.eq("status", status);
         }
 
-        if (sender_wallet) {
-            query_builder.eq("sender_wallet", sender_wallet);
+        if (senderWallet) {
+            queryBuilder.eq("sender_wallet", senderWallet);
         }
 
-        const { data, error } = await query_builder;
+        const { data, error } = await queryBuilder;
 
         if (error) {
             throw createError({

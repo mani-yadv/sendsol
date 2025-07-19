@@ -13,6 +13,11 @@ module.exports = {
         useHead: "readonly",
         useRuntimeConfig: "readonly",
         useSupabaseClient: "readonly",
+        defineEventHandler: "readonly",
+        createError: "readonly",
+        getQuery: "readonly",
+        readBody: "readonly",
+        setResponseHeaders: "readonly",
     },
     extends: [
         "@nuxt/eslint-config",
@@ -127,6 +132,13 @@ module.exports = {
             files: ["layouts/**/*.vue", "pages/**/*.vue", "pages/**/[*.vue", "app.vue"],
             rules: {
                 "vue/component-definition-name-casing": "off",
+            },
+        },
+        {
+            // Override rules for .js files to avoid conflict with prettier
+            files: ["*.js"],
+            rules: {
+                "indent": "off", // Turn off indent rule for .js files to avoid prettier conflicts
             },
         },
     ],

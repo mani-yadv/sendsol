@@ -12,7 +12,7 @@
                     <div class="stat-title font-bold text-primary-content">You sent</div>
                     <div class="stat-value flex items-center space-x-2">
                         <SVGSolanaOutline width="28" />
-                        <span class="text-3xl" v-if="!state.loading">{{ totalSolSent }}</span>
+                        <span v-if="!state.loading" class="text-3xl">{{ totalSolSent }}</span>
                     </div>
                 </div>
 
@@ -45,6 +45,7 @@
     import { useProjectStore } from "~/stores/project/projectStore";
     import { useTransactionsStore } from "~/stores/transactions/transactionsStore";
     import { useUserWalletStore } from "~/stores/user/userWallet";
+    import NumberHelper from "~/helpers/NumberHelper";
 
     export default defineComponent({
         name: "ProjectsSendersUserStat",
@@ -144,7 +145,7 @@
                 await this.fetchTransactions();
                 this.$emit("refresh:senders");
             },
-            
+
             async handleSendClick() {
                 // For mobile wallet issues, try to force reconnect if wallet seems disconnected
                 if (!this.wallet.connected && this.userWalletStore) {

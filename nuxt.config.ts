@@ -47,7 +47,7 @@ export default defineNuxtConfig({
             global: "globalThis"
         }
     },
-    
+
     nitro: {
         experimental: {
             wasm: true
@@ -73,7 +73,7 @@ export default defineNuxtConfig({
     },
 
     hooks: {
-        "render:route": (url, result, context) => {
+        "render:route": (_url, result, _context) => {
             result.html = result.html.replace(/\s+/g, " ");
         }
     },

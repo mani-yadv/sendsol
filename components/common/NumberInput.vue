@@ -54,6 +54,7 @@
                 default: Number.MAX_VALUE
             }
         },
+        emits: ["update:modelValue"],
 
         methods: {
             handleInput(event) {

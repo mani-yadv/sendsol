@@ -29,7 +29,10 @@ export default defineEventHandler(async (event) => {
 
         // Validate wallet addresses
         try {
+            // Validate wallet addresses
+            // eslint-disable-next-line no-new
             new PublicKey(body.sender_wallet);
+            // eslint-disable-next-line no-new
             new PublicKey(body.receiver_wallet);
         } catch (error) {
             return {

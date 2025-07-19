@@ -28,7 +28,7 @@ export const useUserWalletStore = defineStore("userWallet", {
                 this.transactionCompleted = false;
             }, 1000);
         },
-        
+
         // Force wallet reconnection for mobile issues
         async forceReconnect() {
             try {
@@ -36,10 +36,10 @@ export const useUserWalletStore = defineStore("userWallet", {
                     await this.wallet.disconnect();
                 }
                 // Small delay to ensure clean disconnect
-                await new Promise(resolve => setTimeout(resolve, 100));
+                await new Promise((resolve) => setTimeout(resolve, 100));
                 await this.wallet.connect();
             } catch (error) {
-                console.error('Force reconnect failed:', error);
+                // console.error("Force reconnect failed:", error);
             }
         }
     }
