@@ -13,6 +13,11 @@ export default defineNuxtConfig({
     devtools: { enabled: false }, // Enable/disable devtools for better debugging
     sourcemap: false,
 
+    experimental: {
+        payloadExtraction: false,
+        appManifest: false
+    },
+
     vite: {
         define: {
             global: "globalThis"
@@ -38,7 +43,17 @@ export default defineNuxtConfig({
     nitro: {
         experimental: {
             wasm: true
+        },
+        storage: {
+            builds: {
+                driver: "fs",
+                base: "./.nuxt/builds"
+            }
         }
+    },
+
+    app: {
+        buildAssetsDir: "/_nuxt/"
     },
 
     routeRules: {
