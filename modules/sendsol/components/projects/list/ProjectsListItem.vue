@@ -10,7 +10,7 @@
                 <span>{{ project.unique_senders || 0 }}</span>
             </div>
         </div>
-        <NuxtLink :to="`/${project.handle}`">
+        <NuxtLink :to="`/p/${project.handle}`">
             <div class="flex items-center gap-2">
                 <div class="size-6">
                     <UserAvatar

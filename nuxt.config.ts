@@ -57,7 +57,7 @@ export default defineNuxtConfig({
             }
         },
         prerender: {
-            routes: ["/", "/app-manifest.json"]
+            routes: ["/", "/manifest.json"]
         },
         publicAssets: [
             {
@@ -79,13 +79,13 @@ export default defineNuxtConfig({
         buildAssetsDir: "/_nuxt/",
         head: {
             link: [
-                { rel: "manifest", href: "/public/manifest.json" }
+                { rel: "manifest", href: "/manifest.json" }
             ]
         }
     },
 
     routeRules: {
-        "/app-manifest.json": { prerender: true, headers: { "Content-Type": "application/json" } },
+        "/manifest.json": { prerender: true, headers: { "Content-Type": "application/json" } },
         "/logo.png": { prerender: true, headers: { "Content-Type": "image/png" } },
         "/icon-192x192.png": { prerender: true, headers: { "Content-Type": "image/png" } },
         "/icon-512x512.png": { prerender: true, headers: { "Content-Type": "image/png" } },

@@ -225,7 +225,7 @@
             projectUrl() {
                 const currentDomain = window.location.hostname;
                 const handle = this.input.handle || "";
-                return `https://${currentDomain}/${handle}`;
+                return `https://${currentDomain}/p/${handle}`;
             },
             validationSchema() {
                 return createSchema(this.supabase).omit([

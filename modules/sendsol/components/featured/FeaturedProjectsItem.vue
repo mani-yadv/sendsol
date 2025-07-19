@@ -1,6 +1,6 @@
 <template>
     <div class="carousel-item relative">
-        <NuxtLink :to="`/${project.handle}`">
+        <NuxtLink :to="`/p/${project.handle}`">
             <div class="stats min-w-[250px] shadow-lg">
                 <div class="stat">
                     <div class="stat-figure text-secondary">
