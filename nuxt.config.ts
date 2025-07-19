@@ -26,10 +26,7 @@ export default defineNuxtConfig({
             include: ["@solana/web3.js", "buffer", "crypto-browserify", "stream-browserify"]
         },
         build: {
-            target: "esnext",
-            rollupOptions: {
-                external: ["jayson"]
-            }
+            target: "esnext"
         },
         resolve: {
             alias: {
@@ -41,9 +38,6 @@ export default defineNuxtConfig({
                 url: "url"
             }
         },
-        ssr: {
-            noExternal: ["@solana/web3.js"]
-        }
     },
 
     nitro: {
@@ -64,9 +58,6 @@ export default defineNuxtConfig({
                 target: "esnext"
             }
         },
-        rollupConfig: {
-            external: ["jayson"]
-        }
     },
 
     app: {
