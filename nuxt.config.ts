@@ -51,8 +51,14 @@ export default defineNuxtConfig({
             }
         },
         prerender: {
-            routes: ["/"]
-        }
+            routes: ["/", "/manifest.json"]
+        },
+        publicAssets: [
+            {
+                baseURL: "/",
+                dir: "public"
+            }
+        ]
     },
 
     app: {
@@ -65,7 +71,11 @@ export default defineNuxtConfig({
     },
 
     routeRules: {
-        "/manifest.json": { prerender: true },
+        "/manifest.json": { prerender: true, headers: { "Content-Type": "application/json" } },
+        "/logo.png": { prerender: true, headers: { "Content-Type": "image/png" } },
+        "/icon-192x192.png": { prerender: true, headers: { "Content-Type": "image/png" } },
+        "/icon-512x512.png": { prerender: true, headers: { "Content-Type": "image/png" } },
+        "/icon.svg": { prerender: true, headers: { "Content-Type": "image/svg+xml" } },
         "/**": { ssr: false }
     },
 
