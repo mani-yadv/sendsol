@@ -58,8 +58,10 @@ export default defineNuxtConfig({
                 target: "esnext"
             }
         },
-        serverAssets: {
-            baseName: 'server'
+        rollupConfig: {
+            external: (id) => {
+                return id.includes('jayson') || id.includes('node-gyp-build')
+            }
         }
     },
 
