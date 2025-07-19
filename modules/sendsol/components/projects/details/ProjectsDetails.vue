@@ -48,7 +48,7 @@
         },
         data() {
             return {
-                projectHandle: location.pathname.split("/")[1]
+                projectHandle: this.projectId || this.$route.params.slug
             };
         },
 
