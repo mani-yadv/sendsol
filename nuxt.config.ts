@@ -118,18 +118,19 @@ export default defineNuxtConfig({
     css: ["~/assets/scss/custom/main.scss"],
 
     modules: [
-        "@pinia/nuxt",
-        "@nuxtjs/eslint-module",
-        "@nuxtjs/google-fonts",
-        "@nuxt/ui",
-        "@nuxtjs/supabase",
-        "@vueuse/nuxt",
-        "nuxt-viewport",
-        "nuxt-phosphor-icons",
-        "@formkit/auto-animate",
-        "@nuxtjs/device",
-        "@vee-validate/nuxt",
-        "nuxt-vitest"
+      "@pinia/nuxt",
+      "@nuxtjs/eslint-module",
+      "@nuxtjs/google-fonts",
+      "@nuxt/ui",
+      "@nuxtjs/supabase",
+      "@vueuse/nuxt",
+      "nuxt-viewport",
+      "nuxt-phosphor-icons",
+      "@formkit/auto-animate",
+      "@nuxtjs/device",
+      "@vee-validate/nuxt",
+      "nuxt-vitest",
+      "@nuxt/image"
     ],
 
     supabase: {
