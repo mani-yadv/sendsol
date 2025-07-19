@@ -2,7 +2,11 @@
     <div>
         <BottomDrawer :can-close="!isLoading" @close="handleClose">
             <template #header>
-                <div class="text-xl font-bold">Send SOL to this project</div>
+                <div v-if="!isLoading" class="text-xl font-bold">Send SOL to this project</div>
+                <div v-else class="flex items-center space-x-2">
+                    <PhosphorIconSpinner class="animate-spin" size="20" />
+                    <span class="ml-2 text-xl font-bold">Sending SOL ...</span>
+                </div>
             </template>
             <template #content>
                 <div class="mt-4 flex h-full flex-col justify-end space-y-12">
@@ -91,7 +95,6 @@
     import { useProjectStore } from "~/stores/project/projectStore";
     import { useTransactionsStore } from "~/stores/transactions/transactionsStore";
     import { useUserWalletStore } from "~/stores/user/userWallet";
-    import Spinner from "~/components/common/Spinner.vue";
     import NumberInput from "~/components/common/NumberInput.vue";
 
     const RPC_ENDPOINT =
@@ -102,7 +105,6 @@
     export default {
         name: "ProjectsSendersUserActionSend",
         components: {
-            Spinner,
             NumberInput
         },
         directives: {

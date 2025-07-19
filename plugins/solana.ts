@@ -1,9 +1,13 @@
 import "solana-wallets-vue/styles.css";
 import SolanaWallets from "solana-wallets-vue";
-import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
+import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
 
 const walletOptions = {
-    wallets: [new PhantomWalletAdapter()],
+    wallets: [
+        new PhantomWalletAdapter(),
+        new SolflareWalletAdapter()
+        // MWA will be automatically available after registration
+    ],
     autoConnect: true
 };
 
