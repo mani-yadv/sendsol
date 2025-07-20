@@ -4,7 +4,7 @@
             <div class="max-w-screen flex items-center justify-between">
                 <LogoMain />
 
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
                     <ProjectsCreateAction v-if="!isProjectCreatePage" />
                     <UserMenu v-if="userStore.authenticated" />
                 </div>

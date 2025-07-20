@@ -1,9 +1,11 @@
 <template>
     <div class="flex items-center">
         <NuxtLink href="/projects/create">
-            <button class="btn btn-primary btn-xs px-2.5 flex items-center gap-1">
-                <PhosphorIconLightning size="15" />
-                <span class="text-xs font-bold">Create project</span>
+            <button class="btn btn-primary btn-sm">
+                <span class="flex items-center gap-1">
+                    <PhosphorIconLightning size="15" />
+                    <span class="whitespace-nowrap text-xs font-bold">Create project</span>
+                </span>
             </button>
         </NuxtLink>
     </div>
