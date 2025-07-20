@@ -32,3 +32,45 @@ logs
 
 # Claude
 .claude/
+
+# Android/APK builds and signing
+*.keystore
+*.jks
+*.p12
+.android/builds/
+app-release-*.apk
+app-release-*.aab
+app-release-*.idsig
+app-release-unsigned-*.apk
+
+# Solana publishing (SECURITY CRITICAL)
+publishing/sendsol-publisher*.json
+publishing/.asset-manifest-*.json
+publishing/app-release-signed.apk
+publishing/config.yaml
+publishing/node_modules/
+publishing/package-lock.json
+publishing/*.png
+publishing/*.apk
+publishing/*.aab
+
+# Gradle build artifacts  
+build/
+.gradle/
+gradle-app.setting
+
+# TWA/Bubblewrap generated files in root (should be cleaned up)
+/app/
+/build.gradle
+/settings.gradle
+/gradle.properties
+/gradlew
+/gradlew.bat
+/gradle/
+/store_icon.png
+twa-manifest.json
+manifest-checksum.txt
+
+# Store assets (can be regenerated)
+assets/store/apk/
+assets/store/signing/

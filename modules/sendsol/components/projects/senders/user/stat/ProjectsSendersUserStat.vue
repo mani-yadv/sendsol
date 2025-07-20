@@ -30,7 +30,7 @@
                     <div v-if="state.loading" class="stat-value text-right">
                         <div class="loading loading-dots loading-md" />
                     </div>
-                    <div v-else class="stat-value text-right text-3xl">{{ totalStake }}%</div>
+                    <div v-else class="stat-value text-right text-2xl">{{ totalStake }}%</div>
                 </div>
             </div>
 

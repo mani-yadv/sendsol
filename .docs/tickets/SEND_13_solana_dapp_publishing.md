@@ -9,6 +9,12 @@ Links
 - https://docs.solanamobile.com/dapp-publishing/building-expo-apk
 - https://docs.solanamobile.com/dapp-publishing/publishing-updates
 
+How to publish -
+- https://docs.solanamobile.com/dapp-publishing/setup
+- https://docs.solanamobile.com/dapp-publishing/prepare
+- https://docs.solanamobile.com/dapp-publishing/publisher-and-app-nft
+- https://docs.solanamobile.com/dapp-publishing/submit
+
 ## Prerequisites
 - [x] Complete SEND-14 (Mobile Wallet Adapter Migration) FIRST
 - [x] App thoroughly tested on mobile devices
@@ -234,31 +240,70 @@ keytool -list -v -keystore [keystore-file] -alias [alias-name]
 - [ ] Verify clean commit state before publishing
 - [ ] Tag includes all publishing documentation
 
-## Phase 6: Store Submission
+## Phase 6: Official Solana dApp Store Publishing Process
 
-### 5.1 Pre-Submission Checklist
-- [ ] All visual assets prepared and reviewed
-- [ ] App descriptions written and approved
-- [ ] Signed APK tested and stable
-- [ ] Digital Asset Links verified
-- [ ] Test account ready for reviewer
+### 6.1 Environment Setup (Solana CLI Requirements)
+- [ ] Node.js v18-21 (✅ Current: 20.x)
+- [ ] Android SDK Tools with build tools path
+- [ ] JAVA_HOME environment variable (OpenJDK 17 recommended)
+- [ ] ffmpeg (for video preview assets)
 
-### 6.2 Submission Process
-- [ ] Access Solana dApp Store submission portal
-- [ ] Upload signed APK file
-- [ ] Complete app metadata:
-  - [ ] App name and descriptions
-  - [ ] Category selection
-  - [ ] Upload screenshots and video
-  - [ ] Upload app icon
-- [ ] Provide contact information
-- [ ] Submit for review
+### 6.2 Initialize Solana dApp Store CLI
+```bash
+mkdir publishing
+cd publishing
+pnpm init
+pnpm install --save-dev @solana-mobile/dapp-store-cli
+npx dapp-store init
+npx dapp-store --help
+```
 
-### 6.3 Review Process
-- [ ] Monitor submission status
-- [ ] Respond to reviewer feedback promptly
-- [ ] Address any required changes
-- [ ] Coordinate with team for approval
+### 6.3 Prepare Configuration (config.yaml)
+- [ ] Create config.yaml with three sections:
+  - [ ] Publisher section (your information)
+  - [ ] App section (app metadata)
+  - [ ] Release section (critical):
+    - [ ] Display name
+    - [ ] Description  
+    - [ ] Icons (512x512px following Google Play specs)
+    - [ ] Screenshots/Videos (min 4, 1080px+, consistent orientation)
+
+### 6.4 Asset Requirements Validation
+- [ ] APK: Release build, signed with unique key (✅ Complete)
+- [ ] Icons: 512x512px (✅ Available)
+- [ ] Screenshots: Min 4, 1080px+, equal aspect ratio (✅ 6 available)
+- [ ] Videos (optional): 720px+, .mp4 format
+
+### 6.5 Wallet Setup & SOL Funding
+- [ ] Create dedicated Solana keypair for publishing
+- [ ] Fund keypair with SOL (testnet/mainnet)
+- [ ] Secure keypair with appropriate technical measures
+- [ ] Optional: Setup private RPC URL for reliable minting
+
+### 6.6 NFT Creation Process
+- [ ] Validate configuration: `npx dapp-store validate`
+- [ ] Create Publisher NFT (once): `npx dapp-store create publisher -k <keypair>`
+- [ ] Create App NFT (once per app): `npx dapp-store create app -k <keypair>`
+
+### 6.7 Release Submission
+- [ ] Create Release NFT: `npx dapp-store create release -k <keypair> -b <android_sdk_build_tools_path>`
+- [ ] Submit to store:
+```bash
+npx dapp-store publish submit -k <keypair> -u <mainnet_beta_rpc_url> --requestor-is-authorized --complies-with-solana-dapp-store-policies
+```
+
+### 6.8 Review Process Initiation
+- [ ] Join Solana Mobile Discord
+- [ ] Get developer role in `#developer` channel
+- [ ] Post submission confirmation in `#dapp-store` channel
+- [ ] Wait for review team contact
+
+### 6.9 Important Notes
+- [ ] Use CLI version >= 0.8.0
+- [ ] Each app update requires new Release NFT
+- [ ] Default priority fee: 500,000 lamports (customizable with -p)
+- [ ] Minimum 0.25 Mbps upload speed required
+- [ ] Store publishing files should be source controlled with dApp
 
 ## Success Criteria
 - [ ] APK installs successfully on Android

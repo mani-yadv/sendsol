@@ -1,0 +1,57 @@
+publisher:
+  name: SendSol Team
+  address: ''
+  website: https://sendsol.app
+  email: support@sendsol.app
+  media:
+    - purpose: icon
+      uri: icon-512x512.png
+app:
+  name: SendSol
+  address: ''
+  android_package: app.sendsol.www.twa
+  urls:
+    license_url: https://sendsol.app/terms
+    copyright_url: https://sendsol.app/copyright
+    privacy_policy_url: https://sendsol.app/privacy
+    website: https://sendsol.app
+  media:
+    - purpose: icon
+      uri: icon-512x512.png
+release:
+  address: ''
+  media:
+    - purpose: icon
+      uri: icon-512x512.png
+    - purpose: screenshot
+      uri: home-page.png
+    - purpose: screenshot
+      uri: create-project.png
+    - purpose: screenshot
+      uri: project-details.png
+    - purpose: screenshot
+      uri: sendsol-drawer.png
+    - purpose: screenshot
+      uri: sendingsol-drawer.png
+    - purpose: screenshot
+      uri: roadmap.png
+  files:
+    - purpose: install
+      uri: app-release-signed.apk
+  catalog:
+    en-US:
+      name: SendSol
+      short_description: Crowdfund projects on Solana
+      long_description: SendSol is a mobile-first Solana crowdfunding platform. Create projects to raise funds from the community, send SOL donations with ease, and organize fundraising campaigns. Built for creators, entrepreneurs, and community builders on Solana with Mobile Wallet Adapter integration.
+      new_in_version: REPLACE_WITH_VERSION_NOTES
+      saga_features: Optimized for Saga devices with native Mobile Wallet Adapter integration
+solana_mobile_dapp_publisher_portal:
+  google_store_package: ''
+  testing_instructions: |
+    1. Install the APK on Android device
+    2. Connect a Solana wallet (Phantom, Solflare, or other Mobile Wallet Adapter compatible wallet)
+    3. Create a new project with any name
+    4. Test sending a small amount of SOL to verify functionality
+    5. Verify wallet connection and transaction signing works properly
+    Test account not required - use your own Solana wallet with small amounts
+  alpha_testers: []
