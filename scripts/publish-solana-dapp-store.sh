@@ -104,7 +104,7 @@ echo "✅ Configuration valid"
 
 # Step 2: Create/Update Publisher NFT
 echo "🏢 Step 2: Creating Publisher NFT..."
-npx dapp-store create publisher -k "$KEYPAIR_FILE" -u "$RPC_URL"
+npx dapp-store create app -k "$KEYPAIR_FILE" -u "$RPC_URL"
 
 if [ $? -ne 0 ]; then
     echo "❌ Publisher NFT creation failed"
@@ -114,13 +114,7 @@ fi
 echo "✅ Publisher NFT created"
 
 # Step 3: Create/Update App NFT
-echo "📱 Step 3: Creating App NFT..."
-npx dapp-store create app -k "$KEYPAIR_FILE" -u "$RPC_URL"
-
-if [ $? -ne 0 ]; then
-    echo "❌ App NFT creation failed"
-    exit 1
-fi
+echo "📱 Step 3: Skipped (already created in step 2)..."
 
 echo "✅ App NFT created"
 

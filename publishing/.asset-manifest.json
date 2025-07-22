@@ -1,0 +1,49 @@
+{
+  "assets": {
+    "assets/icon-512x512.png": {
+      "path": "assets/icon-512x512.png",
+      "sha256": "GHK1otvwAPMG9IS7YAfkDuUkmwE7gU+DK0nJAkq2n9k=",
+      "uri": "https://arweave.net/HgP5UKnZwfDNUMqrCP0a_q8hjI6fKqKv7oD85BuDZKQ"
+    },
+    "assets/banner-1200x600.png": {
+      "path": "assets/banner-1200x600.png",
+      "sha256": "lGLn/nTbYywWEBJp9/q7Rn8vmYl5sG8WlkojReToMGs=",
+      "uri": "https://arweave.net/Evhv3yurxiLPUChFXFwYjdAweUwPPwLN2VN9P7p6oU0"
+    },
+    "assets/sendsol-drawer.png": {
+      "path": "assets/sendsol-drawer.png",
+      "sha256": "99TpGDz6mvbgLdbVBkVAaUsV6C5rUnGg+4JFST+QqWU=",
+      "uri": "https://arweave.net/jOC8XnjZ_V2vXjqjN-1ID0RXI3W_P55vAYEhZjGIp8c"
+    },
+    "assets/home-page.png": {
+      "path": "assets/home-page.png",
+      "sha256": "mYLQm1+WtZCL1owW7nonh2K5rOLJa1ZZ9scXSgZ3ats=",
+      "uri": "https://arweave.net/vQOwOcHPzBQgiXBmxwNQwDtqnqP8IjMspvFD6rJn5A0"
+    },
+    "assets/sendingsol-drawer.png": {
+      "path": "assets/sendingsol-drawer.png",
+      "sha256": "cY6ttvLiJ2t5O3WlX6lkB41lwkBs6gQKZr1fkQSEM1k=",
+      "uri": "https://arweave.net/9jU_Tx3c_86j09bGTVLMKiEoTeoqCilez5XGI8k60Ps"
+    },
+    "assets/create-project.png": {
+      "path": "assets/create-project.png",
+      "sha256": "kuQDZK5BcZUyldeVsP7p6X39hEn/D3WAAQ/XyHu+0H4=",
+      "uri": "https://arweave.net/WkhFrGe-0pE-jBFm8yU3_-GpN-yz4_awS6tmb3uVhVM"
+    },
+    "assets/project-details.png": {
+      "path": "assets/project-details.png",
+      "sha256": "OEPIt1vlevjqs12+Js1ecpES+p36x7WC2Wp/pw+/ELs=",
+      "uri": "https://arweave.net/uXjSDjtl4HaE7I_wwhx9H8MA4tnlNOhxkkwgVKtW2nM"
+    },
+    "assets/roadmap.png": {
+      "path": "assets/roadmap.png",
+      "sha256": "A0HvIG5SXNsqkPEi59kcTVhFuec1vD7NA1R3m/y55t8=",
+      "uri": "https://arweave.net/FG_RlS4r5Ewa2qsxbL182fs0xYLiUjnoBeZmq9qRKms"
+    },
+    "app-release-signed.apk": {
+      "path": "app-release-signed.apk",
+      "sha256": "SoJQ0T3GeelYZrdw7zujgu+FBqwQRKiUvSCcaF1IlyA=",
+      "uri": "https://arweave.net/BsuWQEvE-nnz8PlBopMTklQBQsymvp81jz7jIUCcT78"
+    }
+  }
+}

@@ -31,17 +31,28 @@ fi
 echo "Building APK with Bubblewrap..."
 bubblewrap build
 
+# Create version-specific build directory
+VERSION_DIR="$BUILD_DIR/v${VERSION}"
+mkdir -p "$VERSION_DIR"
+
 # Move and create versioned copies in build directory
 if [ -f "app-release-signed.apk" ]; then
+    # Copy to latest (for publishing)
     cp app-release-signed.apk "$BUILD_DIR/app-release-signed.apk"
-    cp app-release-signed.apk "$BUILD_DIR/app-release-signed-v${VERSION}.apk"
-    echo "Created: $BUILD_DIR/app-release-signed-v${VERSION}.apk"
+    # Copy to versioned directory
+    cp app-release-signed.apk "$VERSION_DIR/app-release-signed-v${VERSION}.apk"
+    # Also copy to publishing directory for immediate use
+    cp app-release-signed.apk "publishing/app-release-signed.apk"
+    echo "Created: $VERSION_DIR/app-release-signed-v${VERSION}.apk"
+    echo "Updated: publishing/app-release-signed.apk"
 fi
 
 if [ -f "app-release-bundle.aab" ]; then
+    # Copy to latest
     cp app-release-bundle.aab "$BUILD_DIR/app-release-bundle.aab"
-    cp app-release-bundle.aab "$BUILD_DIR/app-release-bundle-v${VERSION}.aab"
-    echo "Created: $BUILD_DIR/app-release-bundle-v${VERSION}.aab"
+    # Copy to versioned directory
+    cp app-release-bundle.aab "$VERSION_DIR/app-release-bundle-v${VERSION}.aab"
+    echo "Created: $VERSION_DIR/app-release-bundle-v${VERSION}.aab"
 fi
 
 # Clean up root directory
@@ -50,6 +61,9 @@ rm -f app-release-*.apk app-release-*.aab app-release-*.idsig app-release-unsign
 echo "APK build completed for version $VERSION"
 echo "Files organized in $BUILD_DIR:"
 echo "  - app-release-signed.apk (latest)"
-echo "  - app-release-signed-v${VERSION}.apk (versioned)"
+echo "  - v${VERSION}/app-release-signed-v${VERSION}.apk (versioned)"
 echo "  - app-release-bundle.aab (Play Store)"
-echo "  - app-release-bundle-v${VERSION}.aab (versioned)"
+echo "  - v${VERSION}/app-release-bundle-v${VERSION}.aab (versioned)"
+echo ""
+echo "Publishing directory updated:"
+echo "  - publishing/app-release-signed.apk (ready for publishing)"
