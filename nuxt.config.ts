@@ -82,7 +82,6 @@ export default defineNuxtConfig({
 
     components: [
         { path: "~/components" },
-        { path: "~/modules/ride/components" },
         { path: "~/modules/sendsol/components" },
         { path: "~/components/common" }
     ],

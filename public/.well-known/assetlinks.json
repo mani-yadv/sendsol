@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.sendsol.www.twa",
+    "sha256_cert_fingerprints": ["83:56:3E:DD:43:C0:E6:62:12:B5:00:51:7B:0A:5B:5E:0B:46:22:FF:4C:D8:41:AA:03:1E:7A:15:AB:52:DC:6F"]
+  }
+}]
