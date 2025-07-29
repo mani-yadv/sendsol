@@ -21,26 +21,24 @@
                 <NuxtLink to="/">
                     <PhosphorIconArrowLeft class="text-primary" size="24" />
                 </NuxtLink>
-                <div class="flex items-center space-x-1 px-2">
+                <div class="flex items-center space-x-4 px-2">
                     <span class="text-lg font-bold">
                         {{ projectStore.project.name }}
                     </span>
-                    <div class="flex items-center">
-                        <button 
+                    <div class="flex items-center space-x-2">
+                        <span 
                             @click="shareProject" 
-                            class="btn btn-ghost btn-sm btn-circle hover:btn-primary"
-                            :disabled="isSharing"
+                            class="cursor-pointer"
                         >
                             <PhosphorIconShareNetwork v-if="!isSharing" class="text-base-content/70" size="20" />
                             <span v-else class="loading loading-spinner loading-xs"></span>
-                        </button>
-                        <button 
-                            @click="shareOnTwitter" 
-                            class="btn btn-ghost btn-sm btn-circle hover:btn-primary"
-                            title="Share on X"
+                        </span>
+                        <span 
+                            @click="shareOnX" 
+                            class="cursor-pointer"
                         >
                             <PhosphorIconXLogo class="text-base-content/70" size="20" />
-                        </button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -122,7 +120,7 @@
                     this.isSharing = false;
                 }
             },
-            shareOnTwitter() {
+            shareOnX() {
                 const projectUrl = `${window.location.origin}/p/${this.projectStore.project.handle}`;
                 const tweetText = `🚀 Check out this amazing project: "${this.projectStore.project.name}" on @SendSol!
 
