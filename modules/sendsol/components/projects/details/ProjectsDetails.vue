@@ -21,9 +21,28 @@
                 <NuxtLink to="/">
                     <PhosphorIconArrowLeft class="text-primary" size="24" />
                 </NuxtLink>
-                <span class="px-2 text-lg font-bold">
-                    {{ projectStore.project.name }}
-                </span>
+                <div class="flex items-center space-x-1 px-2">
+                    <span class="text-lg font-bold">
+                        {{ projectStore.project.name }}
+                    </span>
+                    <div class="flex items-center">
+                        <button 
+                            @click="shareProject" 
+                            class="btn btn-ghost btn-sm btn-circle hover:btn-primary"
+                            :disabled="isSharing"
+                        >
+                            <PhosphorIconShareNetwork v-if="!isSharing" class="text-base-content/70" size="20" />
+                            <span v-else class="loading loading-spinner loading-xs"></span>
+                        </button>
+                        <button 
+                            @click="shareOnTwitter" 
+                            class="btn btn-ghost btn-sm btn-circle hover:btn-primary"
+                            title="Share on X"
+                        >
+                            <PhosphorIconXLogo class="text-base-content/70" size="20" />
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div>
@@ -48,7 +67,8 @@
         },
         data() {
             return {
-                projectHandle: this.projectId || this.$route.params.slug
+                projectHandle: this.projectId || this.$route.params.slug,
+                isSharing: false
             };
         },
 
@@ -59,6 +79,61 @@
         methods: {
             fetchProject() {
                 this.projectStore.fetchProject(this.projectHandle);
+            },
+            async shareProject() {
+                this.isSharing = true;
+                const projectUrl = `${window.location.origin}/p/${this.projectStore.project.handle}`;
+                const shareData = {
+                    title: `${this.projectStore.project.name} - SendSol`,
+                    text: `Check out this project on SendSol: ${this.projectStore.project.name}`,
+                    url: projectUrl
+                };
+
+                try {
+                    // Check if Web Share API is supported (mobile devices)
+                    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                        await navigator.share(shareData);
+                    } else {
+                        // Fallback to clipboard copy
+                        await navigator.clipboard.writeText(projectUrl);
+                        // Show success toast
+                        this.$toast.success('Project link copied to clipboard!', {
+                            position: 'bottom-center',
+                            duration: 2000
+                        });
+                    }
+                } catch (error) {
+                    // If share was cancelled or clipboard failed, try clipboard as fallback
+                    if (error.name !== 'AbortError') {
+                        try {
+                            await navigator.clipboard.writeText(projectUrl);
+                            this.$toast.success('Project link copied to clipboard!', {
+                                position: 'bottom-center',
+                                duration: 2000
+                            });
+                        } catch (clipboardError) {
+                            this.$toast.error('Unable to share or copy link', {
+                                position: 'bottom-center',
+                                duration: 2000
+                            });
+                        }
+                    }
+                } finally {
+                    this.isSharing = false;
+                }
+            },
+            shareOnTwitter() {
+                const projectUrl = `${window.location.origin}/p/${this.projectStore.project.handle}`;
+                const tweetText = `🚀 Check out this amazing project: "${this.projectStore.project.name}" on @SendSol!
+
+Support innovation on Solana 💜
+
+${projectUrl}
+
+#Solana #Crowdfunding #SendSol #Innovation`;
+
+                const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+                window.open(twitterUrl, '_blank', 'noopener,noreferrer');
             }
         }
     });
